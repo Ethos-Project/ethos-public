@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 
-volatile FFI_SharedMemory* eros_bus = nullptr;
+volatile FFI_SharedMemory* shm_bus = nullptr;
 
 namespace Axiom {
 
@@ -92,8 +92,8 @@ void Axiom_Initialize() {
     g_dag.active_circuits.clear();
 
     // Initialize FFI bus
-    eros_bus = &g_shm_inst;
-    g_dag.shm_bus = (FFI_SharedMemory*)eros_bus;
+    shm_bus = &g_shm_inst;
+    g_dag.shm_bus = (FFI_SharedMemory*)shm_bus;
     euler_pool_init(g_dag.shm_bus);
 }
 

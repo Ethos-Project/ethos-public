@@ -132,7 +132,7 @@ static int compile_csharp(const wchar_t*root,const wchar_t*input,const wchar_t*o
 static int find_python(wchar_t python[AX_PATH_CAP]){DWORD n=SearchPathW(NULL,L"python.exe",NULL,AX_PATH_CAP,python,NULL);return n>0&&n<AX_PATH_CAP&&regular_file(python);}
 static int compile_python(const wchar_t*root,const wchar_t*input,const wchar_t*output){wchar_t python[AX_PATH_CAP],emitter[AX_PATH_CAP],generated[AX_PATH_CAP];const wchar_t*args[5];int n,code;if(!find_python(python)||!join_path(emitter,root,L"src\\pipelines\\python_to_c.py"))return AX_BACKEND;n=_snwprintf(generated,AX_PATH_CAP,L"%ls.py.c",output);if(n<0||n>=AX_PATH_CAP)return AX_ARTIFACT;DeleteFileW(generated);args[0]=python;args[1]=emitter;args[2]=input;args[3]=generated;args[4]=NULL;code=run_process(python,args);if(code)return code;if(!regular_file(generated))return AX_ARTIFACT;return compile_native(root,generated,output,0);}
 
-static void help(void){puts("Axi universal native compiler/transpiler");puts("Usage: Axi_compiler <input.{axi,c,cpp,cc,cxx,cs,py}> <output.exe>");puts("Base Axi uses dedicated pipelines; Psyche shared IR/DAG is an additional layer.");}
+static void help(void){puts("Axi universal native compiler/transpiler");puts("Usage: Axi_compiler <input.{axi,c,cpp,cc,cxx,cs,py}> <output.exe>");puts("Base Axi uses dedicated pipelines; Advanced shared IR/DAG is an additional layer.");}
 int wmain(int argc,wchar_t**argv){
     wchar_t root[AX_PATH_CAP],input[AX_PATH_CAP],output[AX_PATH_CAP];const wchar_t*ext;int code;
     if(argc!=3){help();return AX_USAGE;}

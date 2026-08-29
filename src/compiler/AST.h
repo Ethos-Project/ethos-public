@@ -5,8 +5,8 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
-#include "../../eros_flat_core/eros_bus.h"
-#include "../../eros_flat_core/euler_pool.h"
+#include "../shm_bus.h"
+#include "../euler_pool.h"
 
 namespace Axiom {
 

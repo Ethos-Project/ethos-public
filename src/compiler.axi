@@ -216,7 +216,7 @@ node compile_binary() -> int:
     if (!compile_status) return;
     printf("[AXIOM_COMPILER] Invoking MinGW GCC natively to build executable...\n");
     char cmd[2048];
-    sprintf(cmd, "C:\\\\Antigravity\\\\cogni-core\\\\tools\\\\python_to_c_compiler\\\\bin\\\\mingw64\\\\bin\\\\gcc.exe output.c -o %s -I.\\\\raylib-5.0_win64_mingw-w64\\\\include -L.\\\\raylib-5.0_win64_mingw-w64\\\\lib -I.\\\\lib\\\\llama.cpp\\\\include -L.\\\\lib\\\\llama.cpp\\\\build\\\\src -lraylib -lgdi32 -lwinmm -lllama -lws2_32", g_argv[2]);
+    sprintf(cmd, ".\\\\\\\\tools\\\\mingw64\\\\bin\\\\gcc.exe output.c -o %s -I.\\\\raylib-5.0_win64_mingw-w64\\\\include -L.\\\\raylib-5.0_win64_mingw-w64\\\\lib -I.\\\\lib\\\\llama.cpp\\\\include -L.\\\\lib\\\\llama.cpp\\\\build\\\\src -lraylib -lgdi32 -lwinmm -lllama -lws2_32", g_argv[2]);
     system(cmd);
     printf("[AXIOM_COMPILER] FULL BOOTSTRAP COMPLETE! Executable generated.\n");
     """

@@ -155,7 +155,7 @@ void handle_client() {
     } else if (strcmp(path, "/issues") == 0 || strcmp(path, "/issues/") == 0) {
         strcat(response_body, "# Axiom DAG Issue Index\r\n\r\n");
 
-        DIR* dir = opendir("C:\\Antigravity\\cogni-core\\.axiom\\issues");
+        DIR* dir = opendir(".\\\\.axiom\\\\issues");
         if (dir) {
             struct dirent* entry;
             while ((entry = readdir(dir)) != NULL) {
@@ -181,7 +181,7 @@ void handle_client() {
     } else if (strncmp(path, "/issues/", 8) == 0) {
         char filepath[768] = {0};
         snprintf(filepath, sizeof(filepath),
-            "C:\\Antigravity\\cogni-core\\.axiom\\issues\\%s", path + 8);
+            ".\\\\.axiom\\\\issues\\%s", path + 8);
 
         FILE* f = fopen(filepath, "r");
         if (f) {
@@ -209,7 +209,7 @@ void handle_client() {
 
     // ---- Route: GET / (root UI) ----
     } else if (strcmp(path, "/") == 0) {
-        FILE* f = fopen("C:\\Ethos\\ethos-products\\axi\\network\\ethos-server\\eros_ui.html", "r");
+        FILE* f = fopen("./network/server/ui.html", "r");
         if (f) {
             size_t n = fread(response_body, 1, sizeof(response_body) - 1, f);
             response_body[n] = '\0';
@@ -267,7 +267,7 @@ void handle_client() {
                 if (fn_len > 0 && filename[fn_len-1] == '\r') filename[fn_len-1] = '\0';
                 
                 char filepath[768];
-                snprintf(filepath, sizeof(filepath), "C:\\Antigravity\\cogni-core\\.axiom\\issues\\%s", filename);
+                snprintf(filepath, sizeof(filepath), ".\\\\.axiom\\\\issues\\%s", filename);
                 FILE* f = fopen(filepath, "wb"); // wb to avoid Windows mangling \n
                 if (f) {
                     fwrite(next_line + 1, 1, content_length - fn_len - 1, f);

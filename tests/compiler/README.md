@@ -24,4 +24,4 @@ Codex's managed filesystem sandbox blocks C++ standard-library initialization.
 `invalid.c` and `unsupported.py` are negative fixtures. Each must return
 nonzero and leave no requested executable. The Python route intentionally
 supports only a small, generic module-level `print(constant)` subset today and
-does not import Psyche or Eros cognition.
+does not import internal proprietary logic.
