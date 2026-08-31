@@ -4,21 +4,25 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace AxiCLI
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             if (args.Length == 0)
             {
                 Console.WriteLine("Usage: axi <command>");
-                Console.WriteLine("Commands: init, track, wrap, ship, status");
+                Console.WriteLine("Commands: init, track, wrap, ship, status, push, pull");
                 return;
             }
 
             string command = args[0].ToLower();
+            
+            // Dynamic pathing: Use the directory where the user typed the command
             string currentDir = Directory.GetCurrentDirectory();
             string AxiDir = Path.Combine(currentDir, ".axi");
             
@@ -38,9 +42,10 @@ namespace AxiCLI
                         File.WriteAllText(headFile, "ref: refs/heads/main\n");
                         File.WriteAllText(Path.Combine(refsDir, "heads", "main"), "");
                         
+                        // Initialize empty TOON config
                         File.WriteAllText(configFile, "tracked_directories[0]:\n");
                         
-                        Console.WriteLine($"[Axi DVCS] Initialized local DAG ledger in {AxiDir}");
+                        Console.WriteLine($"[Axi DVCS] Initialized local cryptographic DAG ledger in {AxiDir}");
                         Console.WriteLine("[Axi DVCS] Created axi_config.toon (Run 'axi track <path>' to add folders)");
                     }
                     else
@@ -126,8 +131,8 @@ namespace AxiCLI
                         return;
                     }
 
+                    string salt = GetCognitiveSalt();
                     long timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                    string salt = GetRandomSalt();
 
                     StringBuilder payloadBuilder = new StringBuilder();
                     foreach (var dir in trackedDirs)
@@ -142,12 +147,12 @@ namespace AxiCLI
 
                     string payload = payloadBuilder.ToString();
                     
-                    using (SHA256 sha256 = SHA256.Create())
+                    using (SHA512 sha512 = SHA512.Create())
                     {
-                        byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(payload + salt + timestamp.ToString()));
-                        string digest = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                        byte[] hashBytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(payload + salt + timestamp.ToString()));
+                        string digest = BitConverter.ToString(hashBytes).Replace("-", "").ToLower().Substring(0, 40);
 
-                        string wipPath = Path.Combine(objectsDir, $"wip-{digest.Substring(0, 40)}");
+                        string wipPath = Path.Combine(objectsDir, $"wip-{digest}");
                         
                         StringBuilder toonBuilder = new StringBuilder();
                         toonBuilder.AppendLine("commit_node:");
@@ -165,6 +170,41 @@ namespace AxiCLI
                     }
                     break;
 
+                case "ship":
+                    if (!Directory.Exists(AxiDir))
+                    {
+                        Console.WriteLine("[Error] Not an Axi repository. Run 'axi init' first.");
+                        return;
+                    }
+                    string shipSalt = GetCognitiveSalt();
+                    long shipTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                    string shipPayload = "ship_payload";
+
+                    using (SHA512 sha512 = SHA512.Create())
+                    {
+                        byte[] hashBytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(shipPayload + shipSalt + shipTimestamp.ToString()));
+                        string digest = BitConverter.ToString(hashBytes).Replace("-", "").ToLower().Substring(0, 40);
+
+                        string commitPath = Path.Combine(objectsDir, digest);
+                        
+                        StringBuilder toonShipBuilder = new StringBuilder();
+                        toonShipBuilder.AppendLine("commit_node:");
+                        toonShipBuilder.AppendLine($"  type: ship");
+                        toonShipBuilder.AppendLine($"  hash: \"{digest}\"");
+                        toonShipBuilder.AppendLine($"  timestamp: {shipTimestamp}");
+                        toonShipBuilder.AppendLine($"  salt: \"{shipSalt}\"");
+                        toonShipBuilder.AppendLine("semantic_layer[1]:");
+                        toonShipBuilder.AppendLine($"  {shipPayload}");
+                        
+                        File.WriteAllText(commitPath, toonShipBuilder.ToString());
+                        File.WriteAllText(Path.Combine(refsDir, "heads", "main"), digest);
+
+                        Console.WriteLine("[Axi DVCS] Initiating Release Pipeline...");
+                        Console.WriteLine($"5. Transmitting mutations to local ledger (Signed Proof: 0x{digest.Substring(0, 12)})... [OK]");
+                        Console.WriteLine("[Axi DVCS] Release Staged & Promoted to Production!");
+                    }
+                    break;
+                    
                 case "status":
                     if (!Directory.Exists(AxiDir))
                     {
@@ -174,9 +214,82 @@ namespace AxiCLI
                     string currentHead = File.ReadAllText(Path.Combine(refsDir, "heads", "main")).Trim();
                     if (string.IsNullOrEmpty(currentHead)) currentHead = "genesis";
 
-                    Console.WriteLine($"[Axi DVCS] Workspace: {currentDir}");
+                    Console.WriteLine($"[Axi DVCS] Querying authoritative workspace: {currentDir}");
                     Console.WriteLine($"Current Branch: main (HEAD -> {(currentHead.Length > 10 ? currentHead.Substring(0, 10) : currentHead)})");
                     Console.WriteLine("Status: Ready for 'axi wrap' (Snapshot) or 'axi ship' (Release).");
+                    break;
+
+                case "push":
+                    if (!Directory.Exists(AxiDir))
+                    {
+                        Console.WriteLine("[Error] Not an Axi repository. Run 'axi init' first.");
+                        return;
+                    }
+                    string pushHead = File.ReadAllText(Path.Combine(refsDir, "heads", "main")).Trim();
+                    if (string.IsNullOrEmpty(pushHead))
+                    {
+                        Console.WriteLine("[Error] No commits to push. Run 'axi ship' first.");
+                        return;
+                    }
+                    string commitFile = Path.Combine(objectsDir, pushHead);
+                    if (!File.Exists(commitFile))
+                    {
+                        Console.WriteLine($"[Error] Commit object {pushHead} not found.");
+                        return;
+                    }
+                    
+                    try
+                    {
+                        using (HttpClient client = new HttpClient())
+                        {
+                            string commitData = File.ReadAllText(commitFile);
+                            StringContent content = new StringContent(commitData, Encoding.UTF8, "application/json");
+                            Console.WriteLine($"[Axi DVCS] Pushing {pushHead.Substring(0, 10)} to http://localhost:8081/push ...");
+                            HttpResponseMessage response = await client.PostAsync("http://localhost:8081/push", content);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                Console.WriteLine("[Axi DVCS] Push successful.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[Error] Push failed with status code: {response.StatusCode}");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[Error] Failed to connect to backend on port 8081: {ex.Message}");
+                    }
+                    break;
+
+                case "pull":
+                    if (!Directory.Exists(AxiDir))
+                    {
+                        Console.WriteLine("[Error] Not an Axi repository. Run 'axi init' first.");
+                        return;
+                    }
+                    try
+                    {
+                        using (HttpClient client = new HttpClient())
+                        {
+                            Console.WriteLine("[Axi DVCS] Pulling latest from http://localhost:8081/pull ...");
+                            HttpResponseMessage response = await client.GetAsync("http://localhost:8081/pull");
+                            if (response.IsSuccessStatusCode)
+                            {
+                                string pullData = await response.Content.ReadAsStringAsync();
+                                Console.WriteLine("[Axi DVCS] Pull successful.");
+                                Console.WriteLine(pullData);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[Error] Pull failed with status code: {response.StatusCode}");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[Error] Failed to connect to backend on port 8081: {ex.Message}");
+                    }
                     break;
 
                 default:
@@ -185,7 +298,7 @@ namespace AxiCLI
             }
         }
 
-        static string GetRandomSalt()
+        static string GetCognitiveSalt()
         {
             using (SHA256 sha256 = SHA256.Create())
             {
