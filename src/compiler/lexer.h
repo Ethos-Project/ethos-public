@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 
-namespace Axiom {
+namespace axiom {
+namespace compiler {
 
 enum class TokenType {
     // Standard Types & Identifiers
@@ -24,8 +25,10 @@ enum class TokenType {
     ASYNC_FORK,    // "||>"
     SYNC_BARRIER,  // "==>"
 
-    // Standard Control Flow
+    // Standard Control Flow & ABC Syntax
     KW_IF, KW_ELSE, KW_FOR, KW_WHILE, KW_NODE, KW_STATE,
+    KW_HOW_TO, KW_PUT, KW_IN, KW_WRITE, KW_TO_SCREEN,
+    KW_LET, KW_PUB, KW_FN, KW_STRUCT, KW_IMPORT,
 
     // Engine Directives (Ingestion Tags)
     TAG_C_NATIVE,   // @C_Native
@@ -61,6 +64,10 @@ private:
     int current_indent = 0;
 };
 
-} // namespace Axiom
+// Expose AxiomLexer as alias for compatibility with main.cpp
+using AxiomLexer = Lexer;
+
+} // namespace compiler
+} // namespace axiom
 
 #endif // LEXER_H
