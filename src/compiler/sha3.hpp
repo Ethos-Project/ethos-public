@@ -77,6 +77,7 @@ private:
             state[i] ^= val;
         }
         keccak_f1600();
+        std::memset(buffer, 0, sizeof(buffer));
     }
 
 public:
