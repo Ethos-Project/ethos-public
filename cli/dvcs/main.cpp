@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <fstream>
 #include <chrono>
+#include "sha3.hpp"
 
 namespace fs = std::filesystem;
 
@@ -56,36 +57,41 @@ int cmd_wrap() {
     }
     
     auto now = std::chrono::system_clock::now().time_since_epoch().count();
-    std::string mock_hash = "foss_" + std::to_string(now);
     
-    fs::path object_path = axi_dir / "objects" / mock_hash;
-    std::ofstream obj(object_path);
-    obj << "toon_commit:\n";
-    obj << "  type: wrap_snapshot\n";
-    obj << "  timestamp: " << now << "\n";
-    obj << "  semantic_layer:\n";
-
-    // FOSS enriched payload logic
+    // Build semantic layer payload first
+    std::stringstream payload_stream;
     bool has_files = false;
     for (const auto& entry : fs::directory_iterator(root)) {
         if (entry.is_regular_file()) {
             has_files = true;
             fs::path p = entry.path();
-            obj << "    " << p.filename().string() << ":\n";
-            obj << "      type_ref: \"" << get_type_ref(p) << "\"\n";
-            obj << "      properties: [ size_bytes: " << fs::file_size(p) << " ]\n";
+            payload_stream << "    " << p.filename().string() << ":\n";
+            payload_stream << "      type_ref: \"" << get_type_ref(p) << "\"\n";
+            payload_stream << "      properties: [ size_bytes: " << fs::file_size(p) << " ]\n";
         }
     }
-    if (!has_files) obj << "    \"Basic FOSS Snapshot\"\n";
-
+    if (!has_files) payload_stream << "    \"Basic FOSS Snapshot\"\n";
+    std::string semantic_payload = payload_stream.str();
+    
+    // Hash payload + timestamp
+    std::string digest = axiom::crypto::SHA3_256::hash(semantic_payload + std::to_string(now));
+    
+    fs::path object_path = axi_dir / "objects" / digest;
+    std::ofstream obj(object_path);
+    obj << "toon_commit:\n";
+    obj << "  type: wrap_snapshot\n";
+    obj << "  hash: \"" << digest << "\"\n";
+    obj << "  timestamp: " << now << "\n";
+    obj << "  semantic_layer:\n";
+    obj << semantic_payload;
     obj.close();
     
     // Update main branch
     std::ofstream head_ref(axi_dir / "refs" / "heads" / "main");
-    head_ref << mock_hash << "\n";
+    head_ref << digest << "\n";
     head_ref.close();
     
-    std::cout << "Wrapped current state into FOSS ledger: " << mock_hash << "\n";
+    std::cout << "Wrapped current state into FOSS ledger: " << digest << "\n";
     return 0;
 }
 
