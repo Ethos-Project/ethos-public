@@ -548,6 +548,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             hwndInput = CreateWindowExA(WS_EX_CLIENTEDGE, "Scintilla", "", WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL, 0, 0, 0, 0, hwnd, NULL, hInst, NULL);
             HFONT hFont = CreateFontA(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, "Consolas");
             SendMessageA(hwndInput, WM_SETFONT, (WPARAM)hFont, TRUE);
+            SendMessageA(hwndInput, 2130, 0, 0); // SCI_SETHSCROLLBAR false
+            SendMessageA(hwndInput, 2281, 0, 0); // SCI_SETVSCROLLBAR false
             SetWindowSubclass(hwndInput, InputProc, 1, 0);
             
             LoadFileSystemTree();
