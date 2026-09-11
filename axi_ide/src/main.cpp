@@ -1,8 +1,9 @@
 #include <algorithm>
 #include <windows.h>
 #include <commctrl.h>
-#include <Uxtheme.h>
+#include <UxTheme.h>
 #include <dwmapi.h>
+#include <shlobj.h>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -118,6 +119,45 @@ std::string GetConfigDir() {
     return std::string(buf);
 }
 
+void SaveWorkspaceConfig(const std::string& root);
+
+// First-run setup: shown when no workspace.cfg exists
+bool ShowFirstRunSetup(HINSTANCE hInst) {
+    // Folder picker
+    BROWSEINFOA bi = {0};
+    char displayName[MAX_PATH] = {0};
+    bi.lpszTitle    = "Axi IDE {FOSS Edition} - First Run Setup\n\nSelect your workspace root directory.\nAxi DVCS will initialize a repository here.";
+    bi.ulFlags      = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE | BIF_USENEWUI;
+    bi.pszDisplayName = displayName;
+
+    LPITEMIDLIST pidl = SHBrowseForFolderA(&bi);
+    if (!pidl) return false;
+
+    char path[MAX_PATH] = {0};
+    if (!SHGetPathFromIDListA(pidl, path)) { CoTaskMemFree(pidl); return false; }
+    CoTaskMemFree(pidl);
+
+    std::string chosen(path);
+    SaveWorkspaceConfig(chosen);
+
+    // Run axi init if .axi doesn't exist yet
+    std::string axiDir = chosen + "\\.axi";
+    DWORD att = GetFileAttributesA(axiDir.c_str());
+    if (att == INVALID_FILE_ATTRIBUTES) {
+        std::string cmd = "axi init";
+        STARTUPINFOA si = {sizeof(si)};
+        PROCESS_INFORMATION pi = {0};
+        si.dwFlags = STARTF_USESHOWWINDOW;
+        si.wShowWindow = SW_HIDE;
+        char cmdBuf[MAX_PATH * 2];
+        snprintf(cmdBuf, sizeof(cmdBuf), "cmd.exe /C axi init");
+        CreateProcessA(NULL, cmdBuf, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, path, &si, &pi);
+        WaitForSingleObject(pi.hProcess, 5000);
+        CloseHandle(pi.hProcess); CloseHandle(pi.hThread);
+    }
+    return true;
+}
+
 void LoadWorkspaceConfig() {
     std::string cfgPath = GetConfigDir() + "\\workspace.cfg";
     std::ifstream f(cfgPath);
@@ -129,10 +169,15 @@ void LoadWorkspaceConfig() {
                 g_workspaceRoot.back() == ' '))
             g_workspaceRoot.pop_back();
     }
+    // No config found — trigger first-run setup
+    if (g_workspaceRoot.empty()) {
+        CoInitialize(NULL);
+        ShowFirstRunSetup(NULL);
+        CoUninitialize();
+    }
     if (!g_workspaceRoot.empty()) {
         stateDir = g_workspaceRoot + "\\.psyche_state";
     } else {
-        // Fallback: no root declared yet — psyche IPC unavailable
         stateDir = GetConfigDir() + "\\.psyche_state";
     }
 }
