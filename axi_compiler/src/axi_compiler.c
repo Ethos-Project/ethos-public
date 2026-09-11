@@ -283,7 +283,7 @@ static int compile_python(const wchar_t*root,const wchar_t*input,const wchar_t*o
     return compile_native(root,generated,output,0);
 }
 
-static void help(void){puts("Axi universal native compiler/transpiler");puts("Usage: Axi_compiler <input.{axi,c,cpp,cc,cxx,cs,py,js,ts}> <output.exe>");puts("Base Axi uses dedicated pipelines; Psyche shared IR/DAG is an additional layer.");}
+static void help(void){puts("Axi Compiler {FOSS Edition}");puts("Usage: Axi_compiler <input.{axi,c,cpp,cc,cxx,cs,py,js,ts}> <output.exe>");puts("Base Axi uses dedicated pipelines; Psyche shared IR/DAG is an additional layer.");}
 int wmain(int argc,wchar_t**argv){
     wchar_t root[AX_PATH_CAP],input[AX_PATH_CAP],output[AX_PATH_CAP];const wchar_t*ext;int code;
     if(argc!=3){help();return AX_USAGE;}
