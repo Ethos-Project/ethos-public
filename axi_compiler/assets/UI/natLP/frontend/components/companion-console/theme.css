@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@300;400;500;600;700&display=swap");
+
+@keyframes companionConsoleRainbowShift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+.rainbow-text {
+  background: linear-gradient(
+    90deg,
+    #e05050 0%,
+    #e07830 14%,
+    #c8a800 28%,
+    #38a848 42%,
+    #2888d8 57%,
+    #8840c8 71%,
+    #d840a0 85%,
+    #e05050 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: companionConsoleRainbowShift 5s linear infinite;
+}
+.rainbow-text-fast {
+  background: linear-gradient(
+    90deg,
+    #e05050 0%,
+    #e07830 14%,
+    #c8a800 28%,
+    #38a848 42%,
+    #2888d8 57%,
+    #8840c8 71%,
+    #d840a0 85%,
+    #e05050 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: companionConsoleRainbowShift 2.5s linear infinite;
+}

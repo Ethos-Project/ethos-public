@@ -260,8 +260,7 @@ void InsertTreeItem(HWND hwndTree, TreeNode* node, HTREEITEM hParent, const std:
 
 // Directories to skip during filesystem walk
 static const std::vector<std::string> SKIP_DIRS = {
-    ".git", ".axi", "node_modules", "bin", "obj", "bootstrap",
-    ".user_uploaded", "__pycache__", ".vs", ".vscode"
+    ".git", ".axi", "node_modules", "bin", "obj", "bootstrap", ".user_uploaded", "__pycache__", ".vs", ".vscode", "lib"
 };
 
 bool ShouldSkipDir(const std::string& name) {
@@ -672,4 +671,5 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
     DeleteObject(hDarkBrush);
     return 0;
 }
+
 
