@@ -38,7 +38,14 @@ fn compile_axi_code(source_code: String) -> Result<String, String> {
         let compile: Symbol<CompileFunc> = lib.get(b"axi_compile_file")
             .map_err(|e| format!("Could not find compiler interface: {}", e))?;
         
-        // 3. Convert strings to Windows wide strings (UTF-16)
+        // 3. Set the AXI_ROOT environment variable so the compiler knows where to find its toolchains
+        let mut root_path = dll_path.clone();
+        root_path.pop(); // remove axi_compiler.dll
+        root_path.pop(); // remove components
+        root_path.push("axi_compiler");
+        std::env::set_var("AXI_ROOT", root_path);
+
+        // 4. Convert strings to Windows wide strings (UTF-16)
         let w_input: Vec<u16> = input_path.encode_utf16().chain(std::iter::once(0)).collect();
         let w_output: Vec<u16> = output_path.encode_utf16().chain(std::iter::once(0)).collect();
         
@@ -48,7 +55,15 @@ fn compile_axi_code(source_code: String) -> Result<String, String> {
         if result == 0 {
             Ok(output_path.to_string())
         } else {
-            Err(format!("Compiler returned error code: {}", result))
+            let error_msg = match result {
+                2 => "Usage Error (AX_USAGE): Invalid compiler arguments.",
+                3 => "Input Error (AX_INPUT): Invalid input file or missing C++ compiler toolchain.",
+                4 => "Pipeline Error (AX_PIPELINE): Failed to parse .axi graph. Check for syntax errors or circular dependencies (e.g., self-loops like 'start -> start' are not allowed).",
+                5 => "Backend Error (AX_BACKEND): A pipeline backend (like gcc or dotnet) failed to execute.",
+                6 => "Artifact Error (AX_ARTIFACT): The compiler ran but failed to produce the final executable.",
+                _ => "Unknown Error",
+            };
+            Err(format!("Compiler failed with error code {} - {}", result, error_msg))
         }
     }
 }
