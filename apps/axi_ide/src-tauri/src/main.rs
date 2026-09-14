@@ -15,33 +15,58 @@ type CompileFunc = unsafe extern "C" fn(*const u16, *const u16) -> i32;
 
 #[command]
 fn compile_axi_code(file_path: String) -> Result<String, String> {
-    let input_path = file_path;
+    let input_path = std::path::Path::new(&file_path);
     let output_path = "temp_workspace.exe";
+    let ext = input_path.extension().and_then(|e| e.to_str()).unwrap_or("");
     
-    // The auto-save already writes the file, so we just compile it.
-
     unsafe {
-        let mut dll_path = std::env::current_exe().map_err(|e| e.to_string())?;
-        dll_path.pop(); // remove executable name
-        dll_path.pop(); // remove 'apps' or 'release'
-        if dll_path.ends_with("target") {
-            dll_path.pop(); dll_path.pop(); dll_path.pop();
+        let mut dll_dir = std::env::current_exe().map_err(|e| e.to_string())?;
+        dll_dir.pop(); 
+        dll_dir.pop(); 
+        if dll_dir.ends_with("target") {
+            dll_dir.pop(); dll_dir.pop(); dll_dir.pop();
         }
-        dll_path.push("components");
-        dll_path.push("axi_compiler.dll");
-
-        let lib = Library::new(&dll_path)
-            .map_err(|e| format!("Could not load DLL at {:?}: {}", dll_path, e))?;
+        dll_dir.push("components");
         
-        let compile: Symbol<CompileFunc> = lib.get(b"axi_compile_file")
-            .map_err(|e| format!("Could not find compiler interface: {}", e))?;
-        
-        let mut root_path = dll_path.clone();
+        let mut root_path = dll_dir.clone();
         root_path.pop(); root_path.pop();
         root_path.push("axi_compiler");
         std::env::set_var("AXI_ROOT", root_path);
 
-        let w_input: Vec<u16> = input_path.encode_utf16().chain(std::iter::once(0)).collect();
+        let is_transpile = ext == "py" || ext == "cs";
+        let mut final_compile_path = file_path.clone();
+        
+        if is_transpile {
+            let mut transpile_dll = dll_dir.clone();
+            transpile_dll.push("axi_compiler.dll");
+            
+            let lib = Library::new(&transpile_dll)
+                .map_err(|e| format!("Could not load Transpiler DLL at {:?}: {}", transpile_dll, e))?;
+            
+            let transpile: Symbol<CompileFunc> = lib.get(b"axi_transpile_file")
+                .map_err(|e| format!("Could not find transpiler interface: {}", e))?;
+                
+            final_compile_path = "temp_workspace.axi".to_string();
+            let w_input: Vec<u16> = file_path.encode_utf16().chain(std::iter::once(0)).collect();
+            let w_output: Vec<u16> = final_compile_path.encode_utf16().chain(std::iter::once(0)).collect();
+            
+            let result = transpile(w_input.as_ptr(), w_output.as_ptr());
+            if result != 0 {
+                return Err(format!("Transpiler failed with error code {}", result));
+            }
+        }
+        
+        // Native Compilation using axi.dll
+        let mut lang_dll = dll_dir.clone();
+        lang_dll.push("axi.dll");
+        
+        let lib = Library::new(&lang_dll)
+            .map_err(|e| format!("Could not load Language DLL at {:?}: {}", lang_dll, e))?;
+            
+        let compile: Symbol<CompileFunc> = lib.get(b"axi_compile_file")
+            .map_err(|e| format!("Could not find compiler interface: {}", e))?;
+            
+        let w_input: Vec<u16> = final_compile_path.encode_utf16().chain(std::iter::once(0)).collect();
         let w_output: Vec<u16> = output_path.encode_utf16().chain(std::iter::once(0)).collect();
         
         let result = compile(w_input.as_ptr(), w_output.as_ptr());
@@ -161,3 +186,4 @@ fn main() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
