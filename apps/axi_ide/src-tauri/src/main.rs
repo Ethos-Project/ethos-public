@@ -1,8 +1,8 @@
 // Prevents additional console window on Windows in release
-#![cfg_attr(
-    all(not(debug_assertions), target_os = "windows"),
-    windows_subsystem = "windows"
-)]
+//#![cfg_attr(
+//    all(not(debug_assertions), target_os = "windows"),
+//    windows_subsystem = "windows"
+//)]
 
 use tauri::command;
 use std::fs;
@@ -20,9 +20,20 @@ fn compile_axi_code(source_code: String) -> Result<String, String> {
     fs::write(input_path, source_code).map_err(|e| e.to_string())?;
 
     unsafe {
-        // 2. Load the C++ DLL dynamically
-        let lib = Library::new("../../components/axi_compiler.dll")
-            .map_err(|e| format!("Could not load DLL: {}", e))?;
+        let mut dll_path = std::env::current_exe().map_err(|e| e.to_string())?;
+        dll_path.pop(); // remove executable name
+        dll_path.pop(); // remove 'apps' or 'release'
+        // If we are in target/release, we need to go up two more levels to hit ethos-public
+        if dll_path.ends_with("target") {
+            dll_path.pop(); // target
+            dll_path.pop(); // src-tauri
+            dll_path.pop(); // axi_ide
+        }
+        dll_path.push("components");
+        dll_path.push("axi_compiler.dll");
+
+        let lib = Library::new(&dll_path)
+            .map_err(|e| format!("Could not load DLL at {:?}: {}", dll_path, e))?;
         
         let compile: Symbol<CompileFunc> = lib.get(b"axi_compile_file")
             .map_err(|e| format!("Could not find compiler interface: {}", e))?;
