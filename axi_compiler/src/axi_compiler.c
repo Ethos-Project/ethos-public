@@ -33,6 +33,12 @@ static int full_path(const wchar_t*in,wchar_t out[AX_PATH_CAP]){DWORD n=GetFullP
 static int is_installation_root(const wchar_t*root){wchar_t tool[AX_PATH_CAP];return join_path(tool,root,L"bootstrap\\mingw\\bin\\mingw64\\bin\\gcc.exe")&&regular_file(tool);}
 static int installation_root(wchar_t root[AX_PATH_CAP]){
     DWORD n=GetModuleFileNameW(NULL,root,AX_PATH_CAP);wchar_t*s,candidate[AX_PATH_CAP];
+    
+    // Check environment variable first
+    if(GetEnvironmentVariableW(L"AXI_ROOT", root, AX_PATH_CAP) > 0) {
+        if(is_installation_root(root)) return 1;
+    }
+    
     if(!n||n>=AX_PATH_CAP||!(s=wcsrchr(root,L'\\')))return 0;
     *s=0;
     if(is_installation_root(root))return 1;

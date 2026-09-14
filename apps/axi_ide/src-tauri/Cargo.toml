@@ -9,9 +9,9 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "custom-protocol"] }
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+tauri = { version = "1.8.3", features = ["custom-protocol"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
 libloading = "0.8" # Used for dynamically loading the axi_compiler.dll
 
 [features]
