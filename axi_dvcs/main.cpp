@@ -10,6 +10,7 @@ namespace fs = std::filesystem;
 
 // FOSS Standalone DVCS Backend (axi.exe)
 // Provides a decoupled, lightweight TOON DAG implementation for the Open-Source community.
+// Licensed under the GNU Affero General Public License v3.0 (AGPLv3) or later.
 
 void create_dir(const fs::path& p) {
     if (!fs::exists(p)) {
@@ -135,6 +136,33 @@ int cmd_track() {
     std::cout << "FOSS DVCS: Tracking spatial directories...\n";
     std::cout << "Tracked.\n";
     return 0;
+}
+
+#if defined(_WIN32)
+#define DVCS_API __declspec(dllexport)
+#else
+#define DVCS_API
+#endif
+
+extern "C" {
+    DVCS_API int axi_dvcs_init(const char* path_str) {
+        return cmd_init(path_str ? path_str : "");
+    }
+    DVCS_API int axi_dvcs_wrap() {
+        return cmd_wrap();
+    }
+    DVCS_API int axi_dvcs_status() {
+        return cmd_status();
+    }
+    DVCS_API int axi_dvcs_ship() {
+        return cmd_ship();
+    }
+    DVCS_API int axi_dvcs_inject() {
+        return cmd_inject();
+    }
+    DVCS_API int axi_dvcs_track() {
+        return cmd_track();
+    }
 }
 
 int main(int argc, char* argv[]) {

@@ -300,3 +300,22 @@ int wmain(int argc,wchar_t**argv){
     fwprintf(stderr,L"[Axi] verified pipeline=%ls output=%ls\n",ext,output);return AX_OK;
 }
 
+#if defined(_WIN32)
+#define COMPILER_API __declspec(dllexport)
+#else
+#define COMPILER_API
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+COMPILER_API int axi_compile_file(const wchar_t* input_path, const wchar_t* output_path) {
+    const wchar_t* argv[3] = { L"axi_compiler", input_path, output_path };
+    return wmain(3, (wchar_t**)argv);
+}
+
+#ifdef __cplusplus
+}
+#endif
+

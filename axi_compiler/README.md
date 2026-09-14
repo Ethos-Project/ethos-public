@@ -1,7 +1,7 @@
 # Axi (Axi)
 **The Native Systems Language for the AI Era.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![Platform: Windows | Linux | macOS](https://img.shields.io/badge/platform-cross--platform-lightgrey)]()
 
