@@ -14,6 +14,7 @@ const term = new Terminal({
     theme: { background: '#1e1e1e' },
     fontFamily: 'Consolas, "Courier New", monospace',
     fontSize: 13,
+    cursorBlink: true
 });
 const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
@@ -21,6 +22,45 @@ term.open(document.getElementById('terminal-container'));
 fitAddon.fit();
 window.addEventListener('resize', () => fitAddon.fit());
 term.writeln('\x1b[32mWelcome to Axi IDE (FOSS Edition) Terminal\x1b[0m');
+
+let termCommand = '';
+let termCwd = '';
+
+function printPrompt() {
+    const cwdDisplay = termCwd || '~';
+    term.write(`\r\n\x1b[32m${cwdDisplay}\x1b[0m> `);
+}
+
+term.onData(async e => {
+    switch (e) {
+        case '\r': // Enter
+            term.writeln('');
+            if (termCommand.trim() !== '') {
+                try {
+                    const output = await invoke('run_shell', { cmd: termCommand, cwd: termCwd });
+                    const lines = output.replace(/\r\n/g, '\n').split('\n');
+                    lines.forEach(line => term.writeln(line));
+                } catch (err) {
+                    term.writeln(`\x1b[31m${err}\x1b[0m`);
+                }
+            }
+            termCommand = '';
+            printPrompt();
+            break;
+        case '\u007F': // Backspace
+            if (termCommand.length > 0) {
+                termCommand = termCommand.substr(0, termCommand.length - 1);
+                term.write('\b \b');
+            }
+            break;
+        default:
+            if (e >= String.fromCharCode(0x20) && e <= String.fromCharCode(0x7E) || e >= '\u00a0') {
+                termCommand += e;
+                term.write(e);
+            }
+    }
+});
+printPrompt();
 
 // 2. Setup Monaco Editor & Axi Syntax
 monaco.languages.register({ id: 'axi' });
@@ -156,8 +196,10 @@ function closeFile(path) {
 document.getElementById('openFolderBtn').addEventListener('click', async () => {
     const selected = await open({ directory: true });
     if (selected) {
+        termCwd = selected;
         term.writeln(`\x1b[34mOpened workspace: ${selected}\x1b[0m`);
         loadDirectory(selected);
+        printPrompt();
     }
 });
 

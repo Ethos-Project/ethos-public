@@ -125,6 +125,24 @@ fn execute_program(path: String) -> Result<String, String> {
     Ok(result)
 }
 
+#[command]
+fn run_shell(cmd: String, cwd: String) -> Result<String, String> {
+    let current_dir = if cwd.is_empty() { ".".to_string() } else { cwd };
+    let output = std::process::Command::new("cmd")
+        .args(&["/C", &cmd])
+        .current_dir(&current_dir)
+        .output()
+        .map_err(|e| format!("Shell error: {}", e))?;
+    
+    let mut result = String::from_utf8_lossy(&output.stdout).to_string();
+    let stderr = String::from_utf8_lossy(&output.stderr).to_string();
+    if !stderr.is_empty() {
+        if !result.is_empty() { result.push('\n'); }
+        result.push_str(&stderr);
+    }
+    Ok(result)
+}
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -132,7 +150,8 @@ fn main() {
             read_dir,
             read_file,
             write_file,
-            execute_program
+            execute_program,
+            run_shell
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
