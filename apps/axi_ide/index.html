@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Axi IDE (FOSS Edition)</title>
     <link rel="stylesheet" href="/node_modules/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="/node_modules/@vscode/codicons/dist/codicon.css" />
     <style>
       body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #1e1e1e; color: #d4d4d4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; }
       
@@ -31,11 +32,17 @@
       #editor-area { flex: 1; display: flex; flex-direction: column; min-width: 0; }
       
       /* Tabs */
-      #tabs { height: 35px; background: #2d2d2d; display: flex; border-bottom: 1px solid #1e1e1e; overflow-x: auto; }
+      #tabs-container { height: 35px; background: #2d2d2d; display: flex; border-bottom: 1px solid #1e1e1e; align-items: center; justify-content: space-between; }
+      #tabs { display: flex; overflow-x: auto; flex: 1; height: 100%; }
       .tab { padding: 0 15px; display: flex; align-items: center; background: #2d2d2d; border-right: 1px solid #1e1e1e; cursor: pointer; font-size: 13px; min-width: 100px; color: #999; }
       .tab.active { background: #1e1e1e; color: #fff; border-top: 1px solid #007acc; }
       .tab-close { margin-left: 10px; opacity: 0.5; cursor: pointer; }
       .tab-close:hover { opacity: 1; color: #f44336; }
+      
+      #editor-actions { display: flex; gap: 5px; padding-right: 15px; }
+      #editor-actions button { background: transparent; color: #ccc; border: 1px solid #444; padding: 4px 10px; cursor: pointer; border-radius: 3px; font-size: 11px; font-weight: bold; }
+      #editor-actions button:hover:not(:disabled) { background: #444; color: #fff; }
+      #editor-actions button:disabled { opacity: 0.5; cursor: not-allowed; }
       
       #editor-container { flex: 1; width: 100%; position: relative; }
       
@@ -48,13 +55,10 @@
   <body>
     <div id="toolbar">
       <div class="toolbar-group">
-        <button id="openFolderBtn">Open Folder</button>
-        <button id="saveBtn" disabled>Save</button>
+        <button id="openFolderBtn"><i class="codicon codicon-folder-opened"></i> Open Folder</button>
       </div>
       <div class="toolbar-group">
         <span id="status" style="font-size: 13px; color: #aaa;">Ready</span>
-        <button id="compileBtn" disabled>? Compile Axi</button>
-        <button id="runBtn" disabled>? Run</button>
       </div>
     </div>
     <div id="content">
@@ -63,7 +67,13 @@
         <div id="file-tree"></div>
       </div>
       <div id="editor-area">
-        <div id="tabs"></div>
+        <div id="tabs-container">
+          <div id="tabs"></div>
+          <div id="editor-actions">
+            <button id="compileBtn" disabled><i class="codicon codicon-play"></i> Compile to Safe C</button>
+            <button id="runBtn" disabled><i class="codicon codicon-terminal"></i> Run</button>
+          </div>
+        </div>
         <div id="editor-container"></div>
         <div id="terminal-panel">
           <div class="terminal-header">Terminal / Output</div>

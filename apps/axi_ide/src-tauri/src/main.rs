@@ -14,11 +14,11 @@ use serde::{Serialize, Deserialize};
 type CompileFunc = unsafe extern "C" fn(*const u16, *const u16) -> i32;
 
 #[command]
-fn compile_axi_code(source_code: String) -> Result<String, String> {
-    let input_path = "temp_workspace.axi";
+fn compile_axi_code(file_path: String) -> Result<String, String> {
+    let input_path = file_path;
     let output_path = "temp_workspace.exe";
     
-    fs::write(input_path, source_code).map_err(|e| e.to_string())?;
+    // The auto-save already writes the file, so we just compile it.
 
     unsafe {
         let mut dll_path = std::env::current_exe().map_err(|e| e.to_string())?;
@@ -128,9 +128,14 @@ fn execute_program(path: String) -> Result<String, String> {
 #[command]
 fn run_shell(cmd: String, cwd: String) -> Result<String, String> {
     let current_dir = if cwd.is_empty() { ".".to_string() } else { cwd };
+    
+    let mut path = std::env::var("PATH").unwrap_or_default();
+    path.push_str(";C:\\Ethos\\ethos-public\\axi_dvcs;C:\\Ethos\\ethos-public\\axi_compiler");
+    
     let output = std::process::Command::new("cmd")
         .args(&["/C", &cmd])
         .current_dir(&current_dir)
+        .env("PATH", path)
         .output()
         .map_err(|e| format!("Shell error: {}", e))?;
     

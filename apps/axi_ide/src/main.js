@@ -87,8 +87,27 @@ const treeEl = document.getElementById('file-tree');
 const tabsEl = document.getElementById('tabs');
 const statusEl = document.getElementById('status');
 const compileBtn = document.getElementById('compileBtn');
-const saveBtn = document.getElementById('saveBtn');
 const runBtn = document.getElementById('runBtn');
+
+let saveTimeout = null;
+
+editor.onDidChangeModelContent(() => {
+    if (activeFilePath && openFiles[activeFilePath]) {
+        openFiles[activeFilePath].content = editor.getValue();
+        // Auto-save debounce
+        clearTimeout(saveTimeout);
+        statusEl.innerText = 'Saving...';
+        saveTimeout = setTimeout(async () => {
+            try {
+                await invoke('write_file', { path: activeFilePath, contents: openFiles[activeFilePath].content });
+                statusEl.innerText = 'Saved.';
+                setTimeout(() => { if (statusEl.innerText === 'Saved.') statusEl.innerText = 'Ready'; }, 1500);
+            } catch (e) {
+                term.writeln(`\x1b[31mAuto-save failed: ${e}\x1b[0m`);
+            }
+        }, 800);
+    }
+});
 
 // 4. File Tree Logic
 async function loadDirectory(path) {
@@ -108,9 +127,8 @@ function renderFileTree(nodes, parentPath, container, depth = 0) {
         el.className = 'file-node';
         el.style.paddingLeft = `${10 + depth * 15}px`;
         
-        const icon = document.createElement('span');
-        icon.className = 'file-icon';
-        icon.innerText = node.is_dir ? '?' : '?';
+        const icon = document.createElement('i');
+        icon.className = `file-icon codicon ${node.is_dir ? 'codicon-folder' : 'codicon-file'}`;
         
         const text = document.createElement('span');
         text.innerText = node.name;
@@ -121,7 +139,6 @@ function renderFileTree(nodes, parentPath, container, depth = 0) {
         if (!node.is_dir) {
             el.addEventListener('click', () => openFile(node.path, node.name));
         }
-        // Directories could be expandable, but keep it flat/simple for v1 or just click to dive.
         container.appendChild(el);
     });
 }
@@ -131,7 +148,7 @@ async function openFile(path, name) {
     if (!openFiles[path]) {
         try {
             const content = await invoke('read_file', { path });
-            const model = monaco.editor.createModel(content, path.endsWith('.axi') ? 'axi' : 'plaintext');
+            const model = monaco.editor.createModel(content, path.endsWith('.axi') ? 'axi' : (path.endsWith('.py') ? 'python' : (path.endsWith('.c') || path.endsWith('.cpp') ? 'cpp' : (path.endsWith('.cs') ? 'csharp' : 'plaintext'))));
             openFiles[path] = { name, content, model };
             renderTabs();
         } catch (e) {
@@ -167,16 +184,27 @@ function renderTabs() {
     });
 }
 
+function getCompilerText(path) {
+    if (!path) return '<i class="codicon codicon-play"></i> Compile to Safe C';
+    if (path.endsWith('.axi')) return '<i class="codicon codicon-play"></i> Compile Axi';
+    if (path.endsWith('.py')) return '<i class="codicon codicon-play"></i> Compile Python to C';
+    if (path.endsWith('.cs')) return '<i class="codicon codicon-play"></i> Compile C# to C';
+    if (path.endsWith('.js') || path.endsWith('.ts')) return '<i class="codicon codicon-play"></i> Compile JS to C';
+    return '<i class="codicon codicon-play"></i> Compile to Safe C';
+}
+
 function setActiveFile(path) {
     activeFilePath = path;
     if (path && openFiles[path]) {
         editor.setModel(openFiles[path].model);
-        saveBtn.disabled = false;
-        compileBtn.disabled = !path.endsWith('.axi');
+        
+        const isCompilable = path.endsWith('.axi') || path.endsWith('.py') || path.endsWith('.c') || path.endsWith('.cpp') || path.endsWith('.cs') || path.endsWith('.js') || path.endsWith('.ts');
+        compileBtn.disabled = !isCompilable;
+        compileBtn.innerHTML = getCompilerText(path);
     } else {
         editor.setModel(null);
-        saveBtn.disabled = true;
         compileBtn.disabled = true;
+        compileBtn.innerHTML = '<i class="codicon codicon-play"></i> Compile to Safe C';
     }
     renderTabs();
 }
@@ -203,19 +231,6 @@ document.getElementById('openFolderBtn').addEventListener('click', async () => {
     }
 });
 
-saveBtn.addEventListener('click', async () => {
-    if (!activeFilePath) return;
-    try {
-        const content = editor.getValue();
-        await invoke('write_file', { path: activeFilePath, contents: content });
-        openFiles[activeFilePath].content = content;
-        statusEl.innerText = 'Saved.';
-        setTimeout(() => statusEl.innerText = 'Ready', 2000);
-    } catch (e) {
-        term.writeln(`\x1b[31mFailed to save: ${e}\x1b[0m`);
-    }
-});
-
 let lastCompiledExe = null;
 
 compileBtn.addEventListener('click', async () => {
@@ -224,8 +239,7 @@ compileBtn.addEventListener('click', async () => {
     term.writeln(`\x1b[33mCompiling ${activeFilePath}...\x1b[0m`);
     
     try {
-        const sourceCode = editor.getValue();
-        const result = await invoke('compile_axi_code', { sourceCode });
+        const result = await invoke('compile_axi_code', { filePath: activeFilePath });
         term.writeln(`\x1b[32mSuccess! Compiled to: ${result}\x1b[0m`);
         statusEl.innerText = 'Build Successful';
         lastCompiledExe = result;
