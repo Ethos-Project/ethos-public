@@ -3,7 +3,7 @@
   <h1>Axi Language</h1>
   <p><strong>The barebones language for maximum velocity.</strong></p>
   
-  [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](https://opensource.org/licenses/MIT)
+  [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![License: Commercial](https://img.shields.io/badge/License-Commercial-indigo.svg)](https://allos.the-ethos-project.com)
   [![Version: 1.0.0-beta](https://img.shields.io/badge/Version-1.0.0--beta-blue.svg)](https://axi.the-ethos-project.com)
   [![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 </div>
@@ -55,4 +55,7 @@ If your business requires proprietary tooling, advanced security protocols, or d
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Axi operates under a **Dual / Mixed Licensing** model to support both the open-source community and enterprise businesses.
+
+* **Open Source (AGPLv3):** This repository is licensed under the [GNU Affero General Public License v3.0](LICENSE). You are completely free to use, modify, and distribute Axi for open-source projects, provided that you also open-source your derivative work under the same terms.
+* **Commercial / Enterprise:** If you intend to use Axi in a proprietary, closed-source application or require advanced transpilation capabilities without adhering to the AGPL obligations, you must obtain a commercial license via [Allos Enterprise](https://allos.the-ethos-project.com).
