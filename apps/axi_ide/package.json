@@ -1,0 +1,19 @@
+{
+  "name": "axi-ide",
+  "version": "1.0.0",
+  "description": "Axi FOSS Edition - Native IDE Shell",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.5.0",
+    "monaco-editor": "^0.45.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.5.0",
+    "vite": "^5.0.0"
+  }
+}

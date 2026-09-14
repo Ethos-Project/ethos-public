@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axi IDE (FOSS Edition)</title>
+    <style>
+      body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #1e1e1e; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      #toolbar { height: 40px; background: #2d2d2d; display: flex; align-items: center; padding: 0 15px; border-bottom: 1px solid #444; }
+      #toolbar button { background: #007acc; color: white; border: none; padding: 6px 15px; cursor: pointer; border-radius: 3px; font-weight: bold; }
+      #toolbar button:hover { background: #005f9e; }
+      #editor-container { height: calc(100% - 40px); width: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="toolbar">
+      <button id="compileBtn">▶ Compile Axi</button>
+      <span id="status" style="margin-left: 15px; font-size: 13px; color: #aaa;">Ready</span>
+    </div>
+    <div id="editor-container"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
