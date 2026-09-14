@@ -109,6 +109,15 @@ editor.onDidChangeModelContent(() => {
     }
 });
 
+// Initialize Default Tab
+setTimeout(() => {
+    const defaultPath = 'Welcome.axi';
+    const defaultContent = 'HOW TO start():\n    WRITE TO SCREEN "Welcome to Axi IDE!"\n    ->\n';
+    const model = monaco.editor.createModel(defaultContent, 'axi');
+    openFiles[defaultPath] = { name: 'Welcome.axi', content: defaultContent, model };
+    setActiveFile(defaultPath);
+}, 500);
+
 // 4. File Tree Logic
 async function loadDirectory(path) {
     currentWorkspace = path;

@@ -130,10 +130,10 @@ fn run_shell(cmd: String, cwd: String) -> Result<String, String> {
     let current_dir = if cwd.is_empty() { ".".to_string() } else { cwd };
     
     let mut path = std::env::var("PATH").unwrap_or_default();
-    path.push_str(";C:\\Ethos\\ethos-public\\axi_dvcs;C:\\Ethos\\ethos-public\\axi_compiler");
+    path.push_str(";C:\\Ethos\\ethos-public\\axi_dvcs;C:\\Ethos\\ethos-public\\axi_compiler;C:\\Ethos\\bin");
     
-    let output = std::process::Command::new("cmd")
-        .args(&["/C", &cmd])
+    let output = std::process::Command::new("powershell")
+        .args(&["-NoProfile", "-NonInteractive", "-Command", &cmd])
         .current_dir(&current_dir)
         .env("PATH", path)
         .output()
