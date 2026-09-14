@@ -203,18 +203,34 @@ static int emit_axi_c(const wchar_t*input,const wchar_t*generated){
             end=strstr(start,"\nHOW TO "); if(!end) end=strstr(start,"\nnode "); if(!end) end=strstr(start,"\nstart ->"); if(!end) end=start+strlen(start);
             fprintf(out,"static void %s(void){\n",name);
             char* line=start;
-            while(line<end){
-                char* next=strchr(line+1,'\n'); if(!next)next=end;
-                char tmp[1024]={0}; size_t len=next-line; if(len>1023)len=1023; strncpy(tmp,line,len);
-                char* p; char val[512]={0}, var[256]={0};
-                if((p=strstr(tmp,"PUT "))) {
-                    if(sscanf(p+4,"\"%511[^\"]\" IN %255s",val,var)==2) fprintf(out,"    char* %s = \"%s\";\n",var,val);
-                    else if(sscanf(p+4,"%511s IN %255s",val,var)==2) fprintf(out,"    char* %s = %s;\n",var,val);
-                } else if((p=strstr(tmp,"WRITE "))) {
-                    if(sscanf(p+6,"\"%511[^\"]\" TO SCREEN",val)==1) fprintf(out,"    printf(\"%%s\\n\",\"%s\");\n",val);
+                while(line<end){
+                    char* next=strchr(line+1,'\n'); if(!next)next=end;
+                    char tmp[1024]={0}; size_t len=next-line; if(len>1023)len=1023; strncpy(tmp,line,len);
+                    char* p; char val[512]={0}, var[256]={0};
+                    if((p=strstr(tmp,"PUT "))) {
+                        if(sscanf(p+4,"\"%511[^\"]\" IN %255s",val,var)==2) fprintf(out,"    char* %s = \"%s\";\n",var,val);
+                        else if(sscanf(p+4,"%511s IN %255s",val,var)==2) fprintf(out,"    char* %s = %s;\n",var,val);
+                    } else if((p=strstr(tmp,"SET "))) {
+                        if(sscanf(p+4,"%255s TO \"%511[^\"]\"",var,val)==2) fprintf(out,"    %s = \"%s\";\n",var,val);
+                        else if(sscanf(p+4,"%255s TO %511s",var,val)==2) fprintf(out,"    %s = %s;\n",var,val);
+                    } else if((p=strstr(tmp,"WRITE "))) {
+                        if(sscanf(p+6,"\"%511[^\"]\" TO SCREEN",val)==1) fprintf(out,"    printf(\"%%s\\n\",\"%s\");\n",val);
+                        else if(sscanf(p+6,"%255s TO SCREEN",var)==1) fprintf(out,"    printf(\"%%s\\n\",%s);\n",var);
+                    } else if((p=strstr(tmp,"IF "))) {
+                        if(sscanf(p+3,"%255s IS NOT \"%511[^\"]\" THEN",var,val)==2) fprintf(out,"    if(strcmp(%s, \"%s\") != 0) {\n",var,val);
+                        else if(sscanf(p+3,"%255s IS \"%511[^\"]\" THEN",var,val)==2) fprintf(out,"    if(strcmp(%s, \"%s\") == 0) {\n",var,val);
+                        else if(sscanf(p+3,"%255s IS NOT %511s THEN",var,val)==2) fprintf(out,"    if(%s != %s) {\n",var,val);
+                        else if(sscanf(p+3,"%255s IS %511s THEN",var,val)==2) fprintf(out,"    if(%s == %s) {\n",var,val);
+                    } else if((p=strstr(tmp,"END IF"))) {
+                        fprintf(out,"    }\n");
+                    } else if((p=strstr(tmp,"WHILE "))) {
+                        if(sscanf(p+6,"%255s IS NOT \"%511[^\"]\":",var,val)==2) fprintf(out,"    while(strcmp(%s, \"%s\") != 0) {\n",var,val);
+                        else if(sscanf(p+6,"%255s IS \"%511[^\"]\":",var,val)==2) fprintf(out,"    while(strcmp(%s, \"%s\") == 0) {\n",var,val);
+                    } else if((p=strstr(tmp,"END WHILE"))) {
+                        fprintf(out,"    }\n");
+                    }
+                    line=next;
                 }
-                line=next;
-            }
             fputs("\n}\n",out); cursor=end;
         } else {
             if(match==c1){if(sscanf(cursor,"node %95[^ (]",name)!=1){fclose(out);free(source);DeleteFileW(generated);return AX_PIPELINE;}}
