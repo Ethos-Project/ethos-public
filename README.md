@@ -20,7 +20,7 @@ The fastest way to install the Axi compiler, CLI, and tooling is via the officia
 👉 [https://axi.the-ethos-project.com/download](https://axi.the-ethos-project.com/download)
 
 Alternatively, on Linux/macOS, install via terminal:
-`ash
+`bash
 curl --proto '=https' --tlsv1.2 -sSf https://axi.the-ethos-project.com/install.sh | sh
 `
 
