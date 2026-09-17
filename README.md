@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://via.placeholder.com/150/10B981/FFFFFF?text=Axi" alt="Axi Logo" width="150" height="150" />
   <h1>Axi Language</h1>
-  <p><strong>The barebones language for maximum velocity.</strong></p>
+  <p><strong>The declarative orchestration layer of the modern DAG ecosystem.</strong></p>
   
   [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![License: Commercial](https://img.shields.io/badge/License-Commercial-indigo.svg)](https://allos.the-ethos-project.com)
   [![Version: 1.0.0-beta](https://img.shields.io/badge/Version-1.0.0--beta-blue.svg)](https://axi.the-ethos-project.com)
@@ -10,33 +10,24 @@
 
 <br/>
 
-Axi strips away the bloated abstractions of modern frameworks. It is ridiculously fast, strictly typed, and 100% open-source. Compiled directly to optimized machine code, Axi brings raw power and memory safety without the cognitive overhead.
+Axi is a powerful orchestration and version control language that sits at the base of the modern DAG ecosystem. It serves as the definitive declarative language for the Axi DVCS. general-purpose programming capabilities for the community are written in **Axos** (.axos) and encapsulated safely inside the open-source **Axi Virtual Machine (AVM)**.
 
-## 🚀 Quick Start
+## 🚀 The Axi Architecture: DVCS & AVM
 
-The fastest way to install the Axi compiler, CLI, and tooling is via the official installation scripts.
+Axi is uniquely designed with firm boundaries between orchestration and execution:
 
-**Download the official binaries for your platform here:**
-👉 [https://axi.the-ethos-project.com/download](https://axi.the-ethos-project.com/download)
+* **Axi (The DVCS Language Layer):** The .axi language is used strictly as a declarative, domain-specific language for Distributed Version Control (like Git configs or GitHub Actions). It controls DAG routing, orchestration, and engine configurations.
+* **Axos & The Axi Virtual Machine (AVM):** We've migrated the original bare-metal C compiler capabilities into a secure, bare-bones Virtual Machine. When you need to execute general-purpose logic, it runs safely inside the AVM runtime.
 
-Alternatively, on Linux/macOS, install via terminal:
-`ash
-curl --proto '=https' --tlsv1.2 -sSf https://axi.the-ethos-project.com/install.sh | sh
-`
-
-## ✨ Why Axi?
-
-* **Blazing Fast:** Compiles directly to machine code. No heavy VMs, no unpredictable GC pauses.
-* **Memory Safe:** Strict compiler checks prevent data races and segfaults before they reach production.
-* **Open Ecosystem:** Fully open-source with an expanding universe of core packages.
-* **Zero Overhead:** A barebones architecture perfect for writing massive scale microservices, APIs, and low-level system tooling.
+### Firm Boundary: Axi vs. Allos
+Axi is fully open-source under the AGPLv3 for the community. In contrast, **Allos** is our proprietary enterprise edition—an advanced superset used exclusively for commercial applications, internal AI cognitive routing, and proprietary IP. Both languages are natively tracked by the .axi DVCS DAG, but their execution environments remain strictly separate.
 
 ## 📁 Repository Structure
 
-* /axi_compiler - The core compiler source code.
-* /axi_lang - Standard library and core language specifications.
-* /axi_ide - The official IDE for Axi development.
-* /axi_dvcs - Core components for distributed version control.
+* /avm - The bare-bones Community Axi Virtual Machine (formerly xi_compiler).
+* /axi_lang - Standard library and DVCS core language specifications.
+* /axi_ide - The official IDE for Axi orchestration.
+* /axi - Core .axi distributed version control backend (DAG & YAML engine).
 * /components - Internal subsystems and libraries.
 
 ## 🤝 Contributing
@@ -59,3 +50,4 @@ Axi operates under a **Dual / Mixed Licensing** model to support both the open-s
 
 * **Open Source (AGPLv3):** This repository is licensed under the [GNU Affero General Public License v3.0](LICENSE). You are completely free to use, modify, and distribute Axi for open-source projects, provided that you also open-source your derivative work under the same terms.
 * **Commercial / Enterprise:** If you intend to use Axi in a proprietary, closed-source application or require advanced transpilation capabilities without adhering to the AGPL obligations, you must obtain a commercial license via [Allos Enterprise](https://allos.the-ethos-project.com).
+

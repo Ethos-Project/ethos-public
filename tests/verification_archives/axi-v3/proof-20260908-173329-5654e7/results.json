@@ -1,0 +1,388 @@
+{
+  "run": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+  "before": {
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\axiomc_public.exe": "40811cfd41434769b21c6dc50f749f5cdaf5882fc6ebbbfe179983a3c6ff9d63",
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc_internal.exe": "9b4636a15ebc7e918b965b6615a529581f2f8e5b296d88a79ad31e49b3ffcfbc",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\main.cpp": "ccda9e7a62d703c6871f4adaf1165b904515d8f059825d93223fedf8faf3cdf4",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\sha3.hpp": "05a06fb24c706fb16ca5921d8936880fd7d633c71bba6f753418ffeec6c25c03",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe": "b7d50203de4f0de7b7acf4aa8a64f86e913ecd9c6d1b7d0b7bdcc9599c1ddc4d",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_tui\\axi.exe": "b7d50203de4f0de7b7acf4aa8a64f86e913ecd9c6d1b7d0b7bdcc9599c1ddc4d",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_tui\\.axi\\objects\\1a1125a9f5540714a7f3af564c07210a14a9771a11a39289657e2ed9dea45dbe": "81971ec97f7a30c0a9220529bc7f4316f7e152874e5712d4cdbc1ef78cbb261a",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\main.cpp": "f91330abcf31988129df437c343a1d2c983bcc26f71b4e65892aae5ecca0ce05",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\lexer.cpp": "343e67d323fb2417a0fb50bef1fcc9d5945ec16d9303b40db051971305acac27",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\parser.cpp": "f6bdfaee50a0897b3975abb93eaa499834c46b2c21a7ea598e659cc09777e702",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\analyzer.cpp": "2d67b56660586d62ea84844fcb0ad6fc9543b5b60a858661cf69b4cebe6394f0",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\emitter.cpp": "17f362a87122d51be98cfacdfc4730060590974ffa40e2f8a53365302632fef8",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.cpp": "a14a726761ca68c6465e1c3bb6f652bb86b965f7b747c8a6f2109008e54dbdee",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\sha3.hpp": "05a06fb24c706fb16ca5921d8936880fd7d633c71bba6f753418ffeec6c25c03"
+  },
+  "commands": [
+    {
+      "label": "build-standalone-foss",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\bootstrap\\python_to_c_compiler\\bin\\mingw64\\bin\\g++.exe",
+        "-std=c++17",
+        "-static",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\main.cpp",
+        "-o",
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-axi.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "build-internal",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\bootstrap\\python_to_c_compiler\\bin\\mingw64\\bin\\g++.exe",
+        "-std=c++17",
+        "-static",
+        "-DAXIOM_INTERNAL_BUILD",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\main.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\lexer.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\parser.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\analyzer.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\emitter.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.cpp",
+        "-o",
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-internal.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "build-public",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\bootstrap\\python_to_c_compiler\\bin\\mingw64\\bin\\g++.exe",
+        "-std=c++17",
+        "-static",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\main.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\lexer.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\parser.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\analyzer.cpp",
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\emitter.cpp",
+        "-o",
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-public.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "build-hash-probe",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\bootstrap\\python_to_c_compiler\\bin\\mingw64\\bin\\g++.exe",
+        "-std=c++17",
+        "-static",
+        "-I",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs",
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.cpp",
+        "-o",
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-0",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-3",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-135",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "8094bb53c44cfb1e67b7c30447f9a1c33696d2463ecc1d9c92538913392843c9",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-136",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "26efc47df061b8711d51b632ab9c2b8488b5129fce1af5e450ffc07d05e28896",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-137",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "6fc94fa6c89c97aba55a5373a569bad37d364dec4434c15e747284d60d2e6153",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-272",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "2c4fac6390858a4db70dbaa75a1fc3c56e33b14890979bb817567adbad5972ba",
+      "stderr": ""
+    },
+    {
+      "label": "sha3-vector-1000",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\hash_probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7",
+      "exit": 0,
+      "stdout": "f03ff279a590f362a15a25e8933ab62f4c9ab9506f06c12daa1ed5a891418a21",
+      "stderr": ""
+    },
+    {
+      "label": "packaged-foss-init",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\packaged-foss",
+      "exit": 0,
+      "stdout": "Initialized empty FOSS TOON workspace in C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\packaged-foss\\.axi\n",
+      "stderr": ""
+    },
+    {
+      "label": "packaged-foss-wrap",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\packaged-foss",
+      "exit": 0,
+      "stdout": "Wrapped current state into FOSS ledger: 14ce9ee99f878d5ff4a59198a86ae1e017af3eedb007f98690be34297ea45dc1\n",
+      "stderr": ""
+    },
+    {
+      "label": "packaged-foss-failed-write",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\packaged-foss-failed-write",
+      "exit": 0,
+      "stdout": "Wrapped current state into FOSS ledger: 23b205af978d0e72abf181577ad9f4c15bb59e8d7be312f0da3239de2985287a\n",
+      "stderr": ""
+    },
+    {
+      "label": "rebuilt-foss-init",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-axi.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-foss",
+      "exit": 0,
+      "stdout": "Initialized empty FOSS TOON workspace in C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-foss\\.axi\n",
+      "stderr": ""
+    },
+    {
+      "label": "rebuilt-foss-wrap",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-axi.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-foss",
+      "exit": 0,
+      "stdout": "Wrapped current state into FOSS ledger: 617ec3bc1106f625c4550be17443d8ad535d4e13dcdacadf406e5c8ffa6a6929\n",
+      "stderr": ""
+    },
+    {
+      "label": "rebuilt-foss-failed-write",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-axi.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-foss-failed-write",
+      "exit": 0,
+      "stdout": "Wrapped current state into FOSS ledger: 64e56779a3b776a2c59ca9453b19bb4f5ef5966cfd2dde94e4694a68b10a994d\n",
+      "stderr": ""
+    },
+    {
+      "label": "packaged-public-init",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\axiomc_public.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\packaged-public",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Command 'init' is only available in the internal Ethos build.\n"
+    },
+    {
+      "label": "rebuilt-public-init",
+      "args": [
+        "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-public.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\rebuilt-public",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Command 'init' is only available in the internal Ethos build.\n"
+    },
+    {
+      "label": "long-payload-init",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\semantic-long-payload",
+      "exit": 0,
+      "stdout": "Initialized empty FOSS TOON workspace in C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\semantic-long-payload\\.axi\n",
+      "stderr": ""
+    },
+    {
+      "label": "long-payload-wrap",
+      "args": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\proof-20260908-173329-5654e7\\semantic-long-payload",
+      "exit": 0,
+      "stdout": "Wrapped current state into FOSS ledger: ec14c6cd104e7cbc20c47313013d8d8a853f1a247e32214b83602b096ce18394\n",
+      "stderr": ""
+    }
+  ],
+  "observations": {
+    "sha3_vectors": [
+      {
+        "bytes": 0,
+        "expected": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+        "actual": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+        "pass": true
+      },
+      {
+        "bytes": 3,
+        "expected": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532",
+        "actual": "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532",
+        "pass": true
+      },
+      {
+        "bytes": 135,
+        "expected": "8094bb53c44cfb1e67b7c30447f9a1c33696d2463ecc1d9c92538913392843c9",
+        "actual": "8094bb53c44cfb1e67b7c30447f9a1c33696d2463ecc1d9c92538913392843c9",
+        "pass": true
+      },
+      {
+        "bytes": 136,
+        "expected": "3fc5559f14db8e453a0a3091edbd2bc25e11528d81c66fa570a4efdcc2695ee1",
+        "actual": "26efc47df061b8711d51b632ab9c2b8488b5129fce1af5e450ffc07d05e28896",
+        "pass": false
+      },
+      {
+        "bytes": 137,
+        "expected": "f8d6846cedd2ccfadf15c5879ef95af724d799eed7391fb1c91f95344e738614",
+        "actual": "6fc94fa6c89c97aba55a5373a569bad37d364dec4434c15e747284d60d2e6153",
+        "pass": false
+      },
+      {
+        "bytes": 272,
+        "expected": "a490357b9b3fb39d0a89a117734e5b020b1f33c7bf3fa3575c396425432003d3",
+        "actual": "2c4fac6390858a4db70dbaa75a1fc3c56e33b14890979bb817567adbad5972ba",
+        "pass": false
+      },
+      {
+        "bytes": 1000,
+        "expected": "8f3934e6f7a15698fe0f396b95d8c4440929a8fa6eae140171c068b4549fbf81",
+        "actual": "f03ff279a590f362a15a25e8933ab62f4c9ab9506f06c12daa1ed5a891418a21",
+        "pass": false
+      }
+    ],
+    "packaged-foss": {
+      "ref": "14ce9ee99f878d5ff4a59198a86ae1e017af3eedb007f98690be34297ea45dc1",
+      "hex64": true,
+      "object": "toon_commit:\n  type: wrap_snapshot\n  hash: \"14ce9ee99f878d5ff4a59198a86ae1e017af3eedb007f98690be34297ea45dc1\"\n  timestamp: 1788903220917981200\n  semantic_layer:\n    fixture.txt:\n      type_ref: \"document/text\"\n      properties: [ size_bytes: 9 ]\n",
+      "timestamp_hash_matches": false,
+      "object_hash_matches": false,
+      "failed_write_ref_preserved": false,
+      "semantic_payload_hash": {
+        "hash_input_bytes": 104,
+        "expected_sha3_256": "14ce9ee99f878d5ff4a59198a86ae1e017af3eedb007f98690be34297ea45dc1",
+        "actual": "14ce9ee99f878d5ff4a59198a86ae1e017af3eedb007f98690be34297ea45dc1",
+        "pass": true
+      }
+    },
+    "rebuilt-foss": {
+      "ref": "617ec3bc1106f625c4550be17443d8ad535d4e13dcdacadf406e5c8ffa6a6929",
+      "hex64": true,
+      "object": "toon_commit:\n  type: wrap_snapshot\n  hash: \"617ec3bc1106f625c4550be17443d8ad535d4e13dcdacadf406e5c8ffa6a6929\"\n  timestamp: 1788903221109507700\n  semantic_layer:\n    fixture.txt:\n      type_ref: \"document/text\"\n      properties: [ size_bytes: 9 ]\n",
+      "timestamp_hash_matches": false,
+      "object_hash_matches": false,
+      "failed_write_ref_preserved": false,
+      "semantic_payload_hash": {
+        "hash_input_bytes": 104,
+        "expected_sha3_256": "617ec3bc1106f625c4550be17443d8ad535d4e13dcdacadf406e5c8ffa6a6929",
+        "actual": "617ec3bc1106f625c4550be17443d8ad535d4e13dcdacadf406e5c8ffa6a6929",
+        "pass": true
+      }
+    },
+    "packaged-public_created_ledger": false,
+    "rebuilt-public_created_ledger": false,
+    "supplied_receipt": {
+      "filename": "1a1125a9f5540714a7f3af564c07210a14a9771a11a39289657e2ed9dea45dbe",
+      "hex64": true,
+      "object": "toon_commit:\n  type: wrap_snapshot\n  timestamp: 1788902904351823900\n  semantic_layer:\n    axi.exe:\n      type_ref: \"application/octet-stream\"\n      properties: [ size_bytes: 3319587 ]\n    axi_tui.exe:\n      type_ref: \"application/octet-stream\"\n      properties: [ size_bytes: 91393 ]\n    build_output.c:\n      type_ref: \"source/code\"\n      properties: [ size_bytes: 153 ]\n    main.axi:\n      type_ref: \"source/code\"\n      properties: [ size_bytes: 52 ]\n",
+      "expected_timestamp_hash": "1a1125a9f5540714a7f3af564c07210a14a9771a11a39289657e2ed9dea45dbe",
+      "timestamp_hash_matches": true,
+      "object_hash": "be24686cb0adbfcf02b02ca9d0d8fb502d1e487c411a0e299e688007c4b58924"
+    },
+    "inspected_files_unchanged": false,
+    "long_payload_wrap": {
+      "hash_input_bytes": 267,
+      "expected_sha3_256": "e9fef7abbc5a5a54275f0a08c4d84c1a9a0b6cd738ee6b3d0377edfeb5f6de10",
+      "actual": "ec14c6cd104e7cbc20c47313013d8d8a853f1a247e32214b83602b096ce18394",
+      "pass": false,
+      "object": "toon_commit:\n  type: wrap_snapshot\n  hash: \"ec14c6cd104e7cbc20c47313013d8d8a853f1a247e32214b83602b096ce18394\"\n  timestamp: 1788903316946647700\n  semantic_layer:\n    one.txt:\n      type_ref: \"document/text\"\n      properties: [ size_bytes: 23 ]\n    three.txt:\n      type_ref: \"document/text\"\n      properties: [ size_bytes: 25 ]\n    two.txt:\n      type_ref: \"document/text\"\n      properties: [ size_bytes: 23 ]\n"
+    },
+    "revised_receipt_exists_at_supplied_path": false
+  },
+  "after": {
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\axiomc_public.exe": "40811cfd41434769b21c6dc50f749f5cdaf5882fc6ebbbfe179983a3c6ff9d63",
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc_internal.exe": "9b4636a15ebc7e918b965b6615a529581f2f8e5b296d88a79ad31e49b3ffcfbc",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\main.cpp": "ccda9e7a62d703c6871f4adaf1165b904515d8f059825d93223fedf8faf3cdf4",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\sha3.hpp": "05a06fb24c706fb16ca5921d8936880fd7d633c71bba6f753418ffeec6c25c03",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_dvcs\\axi.exe": "b7d50203de4f0de7b7acf4aa8a64f86e913ecd9c6d1b7d0b7bdcc9599c1ddc4d",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_tui\\axi.exe": "b7d50203de4f0de7b7acf4aa8a64f86e913ecd9c6d1b7d0b7bdcc9599c1ddc4d",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_tui\\.axi\\objects\\1a1125a9f5540714a7f3af564c07210a14a9771a11a39289657e2ed9dea45dbe": "81971ec97f7a30c0a9220529bc7f4316f7e152874e5712d4cdbc1ef78cbb261a",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\main.cpp": "f91330abcf31988129df437c343a1d2c983bcc26f71b4e65892aae5ecca0ce05",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\lexer.cpp": "343e67d323fb2417a0fb50bef1fcc9d5945ec16d9303b40db051971305acac27",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\parser.cpp": "f6bdfaee50a0897b3975abb93eaa499834c46b2c21a7ea598e659cc09777e702",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\analyzer.cpp": "2d67b56660586d62ea84844fcb0ad6fc9543b5b60a858661cf69b4cebe6394f0",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\emitter.cpp": "17f362a87122d51be98cfacdfc4730060590974ffa40e2f8a53365302632fef8",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.cpp": "a14a726761ca68c6465e1c3bb6f652bb86b965f7b747c8a6f2109008e54dbdee",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\sha3.hpp": "502d186b8b46376d16b12f153fdb17fbfed4aedd64015c9ca5481576c647cf7c"
+  },
+  "remote_verification": {
+    "method": "git ls-remote origin refs/heads/master",
+    "remote": "https://github.com/Ethos-Project/ethos-public",
+    "master": "f16e4e405f89cfa3f6e3a477962bd6090a7c665c",
+    "prior_master": "207a69d5d3cf7727e99cb82cc4cbd3b5806216e7"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "axi-ide",
+  "displayName": "Axi IDE",
+  "description": "Scintilla-based application inside VSCodium",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "axi-ide.openScintilla",
+        "title": "Axi: Open Scintilla Editor"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "graphql": "^16.14.2",
+    "graphql-request": "^7.4.0"
+  }
+}

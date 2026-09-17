@@ -1,0 +1,8 @@
+toon_commit:
+  type: wrap_snapshot
+  hash: "14ce9ee99f878d5ff4a59198a86ae1e017af3eedb007f98690be34297ea45dc1"
+  timestamp: 1788903220917981200
+  semantic_layer:
+    fixture.txt:
+      type_ref: "document/text"
+      properties: [ size_bytes: 9 ]

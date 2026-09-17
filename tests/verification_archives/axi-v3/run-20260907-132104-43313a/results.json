@@ -1,0 +1,265 @@
+{
+  "run": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a",
+  "notion": "https://app.notion.com/p/3d4b679aa7008167b710c236017b8769",
+  "before": {
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe": "852c8831f0e9488ffb5b8bfd3c0ef70ef077ac5b499784cf4fbe9bbb0a1e8f23",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe": "facd125ca0dfda13420a447d449e6e918546b65bef02de54b57371451c811e25",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag.axi": "63397342bd1b4aaab5e54934b066f6f8483bf1e24bcbb6dd9688aa93b17eeabd",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c": "1587f94e5ecddca553cfed9fdf0bc7037613fe2ae1ec9b7d6f4d55460acc7429",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.h": "87c649ba9ce298a1f65ed7db8896bb25b035303d34a5057dc052c7bbeff83f99",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\main.cpp": "4fea58f59c8cbe03dc2487d56644b3a41b5a48010c944319f496793ea464e87e",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.cpp": "b6f8411a063049b68615c8e6f901762d0d23a76ff7c563e85b80123907971053",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.h": "b0200685e1ddc9292e978bfd6b3fcef19954bfec915a4b12bc271be022fe66d0",
+    "C:\\Ethos\\ethos-logos\\LANG\\docs\\handoffs\\axi_infrastructure_v3_handoff.md": "92bcde716e0229f94f0436d3b307aa02583a8b7826d651abf6649ab3b4805629",
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\.axi\\refs\\heads\\main": "d2be4bc0f76533c32ce2a5c8bcd6ccbf3d37848739a1ad7af545153600983b34",
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\.axi\\objects\\18d318bc240f95bc00000000599ed38db0de1e36": "90cf79836737d3f36e7c29110add1e43a3a120973197b56d923830e5e8fcafa2"
+  },
+  "commands": [
+    {
+      "label": "internal-help",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger",
+      "exit": 1,
+      "stdout": "Axiom Compiler Engine (Internal Orchestrator)\nUsage: axiomc <command> [args]\nCommands:\n  build <file.axi>   Compile Axi code to C23 binary\n  init               Initialize TOON ledger\n  track <path>       Track directory in DAG\n  wrap               Snapshot current state\n  ship               Commit and release to production\n",
+      "stderr": ""
+    },
+    {
+      "label": "internal-init",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger",
+      "exit": 0,
+      "stdout": "[Axi DVCS] Initialized local cryptographic DAG ledger in C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger\\.axi\n[Axi DVCS] Created axi_config.toon (Run 'axiomc track <path>' to add folders)\n",
+      "stderr": ""
+    },
+    {
+      "label": "internal-track",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "track",
+        "tracked"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger",
+      "exit": 0,
+      "stdout": "[Axi DVCS] Now tracking: C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger\\tracked\n",
+      "stderr": ""
+    },
+    {
+      "label": "internal-wrap",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger",
+      "exit": 0,
+      "stdout": "[Axi DVCS] Snapshotting tracked directories...\n[Axi DVCS] Created WIP State Node: wip-18d319a2f2 (TOON Format)\n",
+      "stderr": ""
+    },
+    {
+      "label": "internal-ship",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "ship"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger",
+      "exit": 0,
+      "stdout": "[Axi DVCS] Initiating Release Pipeline...\n5. Transmitting mutations to local ledger (Signed Proof: 0x18d319a2f3f3)... [OK]\n[Axi DVCS] Release Staged & Promoted to Production!\n",
+      "stderr": ""
+    },
+    {
+      "label": "internal-wrap-no-store",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "wrap"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\no-store",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "[Error] Not an Axi repository. Run 'axiomc init' first.\n"
+    },
+    {
+      "label": "internal-build-missing-input",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "build",
+        "absent.axi"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\missing-input",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Error: Could not open file absent.axi\n"
+    },
+    {
+      "label": "public-help",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\public-help",
+      "exit": 1,
+      "stdout": "Axiom Compiler Engine CLI\nUsage: axiomc build <file.axi>\n",
+      "stderr": ""
+    },
+    {
+      "label": "public-init-rejection",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe",
+        "init"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\public-init-rejection",
+      "exit": 1,
+      "stdout": "Axiom Compiler Engine CLI\nUsage: axiomc build <file.axi>\n",
+      "stderr": ""
+    },
+    {
+      "label": "public-build-smoke",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe",
+        "build",
+        "hello.axi"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\public-compile",
+      "exit": 1,
+      "stdout": "Compiling hello.axi...\n",
+      "stderr": "Compilation Error: Unknown statement: start\n"
+    },
+    {
+      "label": "clang-version",
+      "argv": [
+        "C:\\Program Files\\LLVM\\bin\\clang.exe",
+        "--version"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native",
+      "exit": 0,
+      "stdout": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-pc-windows-msvc\nThread model: posix\nInstalledDir: C:\\Program Files\\LLVM\\bin\n",
+      "stderr": ""
+    },
+    {
+      "label": "native-backend-build",
+      "argv": [
+        "C:\\Program Files\\LLVM\\bin\\clang.exe",
+        "-std=c17",
+        "-I",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core",
+        "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native\\probe.c",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c",
+        "-o",
+        "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native\\probe.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native\\probe.c:1:10: fatal error: 'stdio.h' file not found\n    1 | #include <stdio.h>\n      |          ^~~~~~~~~\n1 error generated.\nC:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c:1:10: fatal error: 'stdio.h' file not found\n    1 | #include <stdio.h>\n      |          ^~~~~~~~~\n1 error generated.\n"
+    },
+    {
+      "label": "native-checkout-link",
+      "argv": [
+        "C:\\Program Files\\LLVM\\bin\\clang.exe",
+        "-std=c17",
+        "-I",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core",
+        "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native\\checkout.c",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c",
+        "-o",
+        "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native\\checkout.exe"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c:1:10: fatal error: 'stdio.h' file not found\n    1 | #include <stdio.h>\n      |          ^~~~~~~~~\n1 error generated.\n"
+    },
+    {
+      "label": "public-minimal-compile",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe",
+        "build",
+        "main.axi"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\minimal-compile",
+      "exit": 0,
+      "stdout": "Compiling main.axi...\n[Orchestrator] Emitted build_output.c.\n[Orchestrator] Running: g++ build_output.c \"C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64/lib/core/dag_native.c\" -o app.exe -L \"C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64/lib\" -L \"C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64/lib/core\" -lraylib -llibllama -I \"C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64/lib/core\"\n",
+      "stderr": "'g++' is not recognized as an internal or external command,\noperable program or batch file.\n[ERROR] GCC Compilation failed with code 1\n"
+    },
+    {
+      "label": "public-dag-api-compile",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe",
+        "build",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag.axi"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\dag-api-compile",
+      "exit": 1,
+      "stdout": "Compiling C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag.axi...\n",
+      "stderr": "Compilation Error: Unknown statement: /\n"
+    },
+    {
+      "label": "public-repository-dag-example",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe",
+        "build",
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\test_dag.axi"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\dag-example-compile",
+      "exit": 1,
+      "stdout": "Compiling C:\\Ethos\\ethos-logos\\LANG\\release\\test_dag.axi...\n",
+      "stderr": "Compilation Error: Unknown statement: import\n"
+    },
+    {
+      "label": "internal-ship-object-write-failure",
+      "argv": [
+        "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe",
+        "ship"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\write-failure",
+      "exit": 0,
+      "stdout": "[Axi DVCS] Initiating Release Pipeline...\n5. Transmitting mutations to local ledger (Signed Proof: 0x18d319b5ca41)... [OK]\n[Axi DVCS] Release Staged & Promoted to Production!\n",
+      "stderr": ""
+    },
+    {
+      "label": "native-sdk-header-check",
+      "argv": [
+        "C:\\Program Files\\LLVM\\bin\\clang.exe",
+        "-std=c17",
+        "-fsyntax-only",
+        "-isystem",
+        "C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt",
+        "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c"
+      ],
+      "cwd": "C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\native",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "In file included from C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c:1:\nIn file included from C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt\\stdio.h:12:\nC:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt\\corecrt.h:10:10: fatal error: 'vcruntime.h' file not found\n   10 | #include <vcruntime.h>\n      |          ^~~~~~~~~~~~~\n1 error generated.\n"
+    }
+  ],
+  "observations": {
+    "internal_objects": {
+      "18d319a2f3f3e1840000000097de2ddbc1c645f7": "commit_node:\n  type: ship\n  hash: \"18d319a2f3f3e1840000000097de2ddbc1c645f7\"\n  timestamp: 2095269530\nsemantic_layer[1]:\n  [Release Payload Placeholder]\n",
+      "wip-18d319a2f2e9c16400000000fb6006729bba2e86": "commit_node:\n  type: wip\n  hash: \"18d319a2f2e9c16400000000fb6006729bba2e86\"\n  timestamp: 2095269512\nsemantic_layer[1]:\n  [Snapshot Data Placeholder]\n"
+    },
+    "tracked_payload_present": false,
+    "internal_main_ref": "18d319a2f3f3e1840000000097de2ddbc1c645f7\n",
+    "tracked_config": "tracked_directories[0]:\n  C:\\Ethos\\verification\\axi-v3\\run-20260907-132104-43313a\\internal-ledger\\tracked\n",
+    "public_build_files": {},
+    "product_files_and_release_ref_unchanged": true,
+    "minimal_emitted_c": "// Auto-generated by Axiom C23 Emitter\n#include <stdio.h>\n#include <stdint.h>\n\n\nint main() {\n    printf(\"%d\\n\", 42);\n}\n",
+    "minimal_app_exists": false,
+    "write_failure_ref": "18d319b5ca4165d800000000b140f5af5f489e7e\n",
+    "write_failure_ref_unchanged": false
+  },
+  "after": {
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\axiomc.exe": "852c8831f0e9488ffb5b8bfd3c0ef70ef077ac5b499784cf4fbe9bbb0a1e8f23",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\bin\\windows-x64\\axiomc_public.exe": "facd125ca0dfda13420a447d449e6e918546b65bef02de54b57371451c811e25",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag.axi": "63397342bd1b4aaab5e54934b066f6f8483bf1e24bcbb6dd9688aa93b17eeabd",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.c": "1587f94e5ecddca553cfed9fdf0bc7037613fe2ae1ec9b7d6f4d55460acc7429",
+    "C:\\Ethos\\ethos-logos\\FOSS\\axi_compiler\\lib\\core\\dag_native.h": "87c649ba9ce298a1f65ed7db8896bb25b035303d34a5057dc052c7bbeff83f99",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\main.cpp": "4fea58f59c8cbe03dc2487d56644b3a41b5a48010c944319f496793ea464e87e",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.cpp": "b6f8411a063049b68615c8e6f901762d0d23a76ff7c563e85b80123907971053",
+    "C:\\Ethos\\ethos-logos\\LANG\\src\\compiler\\dvcs.h": "b0200685e1ddc9292e978bfd6b3fcef19954bfec915a4b12bc271be022fe66d0",
+    "C:\\Ethos\\ethos-logos\\LANG\\docs\\handoffs\\axi_infrastructure_v3_handoff.md": "92bcde716e0229f94f0436d3b307aa02583a8b7826d651abf6649ab3b4805629",
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\.axi\\refs\\heads\\main": "d2be4bc0f76533c32ce2a5c8bcd6ccbf3d37848739a1ad7af545153600983b34",
+    "C:\\Ethos\\ethos-logos\\LANG\\release\\.axi\\objects\\18d318bc240f95bc00000000599ed38db0de1e36": "90cf79836737d3f36e7c29110add1e43a3a120973197b56d923830e5e8fcafa2"
+  }
+}

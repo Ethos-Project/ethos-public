@@ -1,0 +1,6 @@
+commit_node:
+  type: ship
+  hash: "18d31ad658d30da800000000cc281054b46894cb"
+  timestamp: 2096589777
+semantic_layer[1]:
+  [tracked:fixture.txt]

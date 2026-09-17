@@ -1,7 +1,0 @@
-commit_node:
-  type: wip
-  hash: "7835fa32fba0e2d8823b323839c68f80568af7df"
-  timestamp: 1788031433269
-  salt: "7c6fd43857cd9fa2"
-semantic_layer[1]:
-  [ethos-logos:.git|AGENTS.md|cogni-core|domus|eros|governance|GOVERNANCE.md|psyche|research][ethos-products:AxiOffice.lnk|Build Release|eros_flat_core|Languages|PRODUCT_SUITE_MANIFEST.md|SpatialStudio|Windows Applications]

@@ -4,7 +4,7 @@
 namespace axi {
 namespace dvcs {
 
-    // Pure virtual interface for the TOON DAG DVCS backend
+    // Pure virtual interface for the YAML DAG DVCS backend
     class IAxi_dvcs {
     public:
         virtual ~IAxi_dvcs() = default;
@@ -19,3 +19,4 @@ namespace dvcs {
 
 } // namespace dvcs
 } // namespace axi
+

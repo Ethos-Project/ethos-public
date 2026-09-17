@@ -1,0 +1,14 @@
+toon_commit:
+  type: wrap_snapshot
+  hash: "ec14c6cd104e7cbc20c47313013d8d8a853f1a247e32214b83602b096ce18394"
+  timestamp: 1788903316946647700
+  semantic_layer:
+    one.txt:
+      type_ref: "document/text"
+      properties: [ size_bytes: 23 ]
+    three.txt:
+      type_ref: "document/text"
+      properties: [ size_bytes: 25 ]
+    two.txt:
+      type_ref: "document/text"
+      properties: [ size_bytes: 23 ]

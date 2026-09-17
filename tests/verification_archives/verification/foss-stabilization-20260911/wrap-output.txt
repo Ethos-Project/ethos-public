@@ -1,0 +1,2 @@
+[axi] LOCAL: durable and verified object=bf32885e39c7138dfd7af1b717bae73682fe43131d63338acd746d607247730b
+[axi] SERVER: not attempted; local-only WIP
