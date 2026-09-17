@@ -1,0 +1,7 @@
+Manifest {
+  format: axi-wrap-manifest-v1
+  session_id: native-mcp-webtools-99
+  issue_ids: [native-mcp-issue-1]
+  context_ids: [webtools-spec-1]
+  paths: [src/ipc/webtools_mcp.axi, src/ipc/chrome_devtools.ts]
+}
