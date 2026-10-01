@@ -4,20 +4,30 @@ jobs:
   battery:
     runs-on: [self-hosted, windows, arm64]
     steps:
+      - name: Assert Hardware Match
+        run: |
+          if ("$env:PROCESSOR_ARCHITECTURE" -ne "ARM64") {
+            Write-Error "Runner architecture mismatch. Cannot run win-arm64 tests on this hardware."
+            exit 1
+          }
       - name: Checkout FOSS Tree
         uses: actions/checkout@v4
-      - name: Await Runner Procurement
-        run: echo "win-arm64 runner is pending procurement and attachment. Job will queue naturally."
-      - name: Setup Environment
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Fetch Battery scripts
         run: |
-          echo "Setting up clean test environment..."
+          Invoke-WebRequest -Uri "https://forge.the-ethos-project.com/install.ps1" -OutFile "install.ps1"
       - name: Run Install Battery
         run: |
-          # Fetch and execute the Allforge installer (simulated for now until script is hosted)
-          echo "Executing install.ps1..."
-          # Mock JWT setup and execution would happen here
+          .\install.ps1
       - name: Run Smoke Test
         run: |
           echo "WRITE "Hello from Axos!" TO SCREEN" > hello.axos
-          # axos hello.axos
-          echo "Smoke test passed."
+          & axos hello.axos
+      - name: Run Package Battery
+        run: |
+          & allforge install test.sample_private
+          & allforge update test.sample_private
+          & allforge remove test.sample_private
