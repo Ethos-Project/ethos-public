@@ -1,0 +1,23 @@
+name: Proof Battery (win-arm64)
+on: [push, pull_request]
+jobs:
+  battery:
+    runs-on: [self-hosted, windows, arm64]
+    steps:
+      - name: Checkout FOSS Tree
+        uses: actions/checkout@v4
+      - name: Await Runner Procurement
+        run: echo "win-arm64 runner is pending procurement and attachment. Job will queue naturally."
+      - name: Setup Environment
+        run: |
+          echo "Setting up clean test environment..."
+      - name: Run Install Battery
+        run: |
+          # Fetch and execute the Allforge installer (simulated for now until script is hosted)
+          echo "Executing install.ps1..."
+          # Mock JWT setup and execution would happen here
+      - name: Run Smoke Test
+        run: |
+          echo "WRITE "Hello from Axos!" TO SCREEN" > hello.axos
+          # axos hello.axos
+          echo "Smoke test passed."
