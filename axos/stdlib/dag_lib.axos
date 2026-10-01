@@ -1,0 +1,16 @@
+// =====================================================================
+// Axos Standard Library: dag_lib.axos
+// Canonical Directed Acyclic Graph Operations
+// =====================================================================
+
+HOW TO GRAPH nodes AND edges:
+    WRITE "GRAPH " TO SCREEN
+    WRITE nodes TO SCREEN
+    WRITE " AND " TO SCREEN
+    WRITE edges TO SCREEN
+
+HOW TO MERGE source INTO destination:
+    WRITE "MERGE " TO SCREEN
+    WRITE source TO SCREEN
+    WRITE " INTO " TO SCREEN
+    WRITE destination TO SCREEN

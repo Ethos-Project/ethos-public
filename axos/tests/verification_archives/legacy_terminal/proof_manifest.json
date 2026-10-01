@@ -1,0 +1,20 @@
+{
+  "AxiTerminal.exe": {
+    "Sha256": "182108A3E1B74E7ABCFB28F2939620044B5E3138D4F1063054068E42D080D142",
+    "SizeBytes": 91393,
+    "Architecture": "x86_64 MinGW GCC dw2",
+    "RetiredReason": "Deprecated legacy mock terminal / TUI wrapper; replaced by native terminal axi.exe"
+  },
+  "AxiCLI.dll": {
+    "Sha256": "25DBB2B4B29329DF68967C4B1880904CF3A17BFD2984EDDA9C918B5F3E2FEBAC",
+    "SizeBytes": 61489,
+    "Architecture": "x86_64 MinGW GCC dw2",
+    "RetiredReason": "Deprecated legacy TUI helper DLL for AxiTerminal; superseded by libaxi.dll"
+  },
+  "axic.exe": {
+    "Sha256": "5F4821CC48D27331F4C95938D52E8A468699C969674999B064EC9F5A92E2DDAF",
+    "SizeBytes": 4430050,
+    "Architecture": "x86_64 MinGW GCC dw2",
+    "RetiredReason": "Deprecated legacy internal orchestrator from Eros/TOON format era; separated from FOSS axos repo"
+  }
+}

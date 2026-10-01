@@ -1,0 +1,5 @@
+HOW TO PRINT item:
+    WRITE "CUSTOM_SHADOW: " TO SCREEN
+    WRITE item TO SCREEN
+
+PRINT "hello single"

@@ -1,0 +1,5 @@
+state a = 120.0
+state b = 25.5
+state sum = a + b
+print sum
+

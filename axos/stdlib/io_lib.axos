@@ -1,0 +1,12 @@
+// =====================================================================
+// Axos Standard Library: io_lib.axos
+// Canonical I/O and Terminal Operations
+// =====================================================================
+
+HOW TO PRINT item:
+    WRITE item TO SCREEN
+
+HOW TO READ target FROM source:
+    WRITE "READ " TO SCREEN
+    WRITE source TO SCREEN
+    target = source

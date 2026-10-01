@@ -1,0 +1,42 @@
+# Axi DVCS Ignore File (.axiignore) for Axos Community Workspace
+
+# DVCS & Internal Metadata
+.axi/
+.git/
+.gemini/
+.vscode/
+
+# Bundled External Toolchains (MinGW64 compiler)
+bootstrap/
+avm/bootstrap/
+
+# Build Artefacts & Intermediates (.NET and C++)
+build/
+dist/
+obj/
+bin/Debug/
+bin/Release/
+avm/cli/bin/
+avm/cli/obj/
+avm/console/bin/
+avm/console/obj/
+CMakeFiles/
+CMakeCache.txt
+*.obj
+*.o
+*.a
+*.pdb
+*.tmp
+*.log
+*.exe.c
+*.exe.py.c
+
+# Large Test Archives & Temporary Dumps
+tests/verification_archives/
+tmp/
+avm/tmp/
+
+# OS Artifacts
+Thumbs.db
+Desktop.ini
+.DS_Store

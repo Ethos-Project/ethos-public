@@ -1,0 +1,16 @@
+// =====================================================================
+// Axos Standard Library: system_lib.axos
+// Canonical System and Process Operations
+// =====================================================================
+
+HOW TO RUN command WITH args:
+    WRITE "RUN " TO SCREEN
+    WRITE command TO SCREEN
+    WRITE " WITH " TO SCREEN
+    WRITE args TO SCREEN
+
+HOW TO SERVE endpoint ON port:
+    WRITE "SERVE " TO SCREEN
+    WRITE endpoint TO SCREEN
+    WRITE " ON " TO SCREEN
+    WRITE port TO SCREEN

@@ -1,0 +1,10 @@
+@C_Include("<stdio.h>")
+
+node emit_axos_marker() -> int:
+    @C_Native
+    """
+    printf("Hello from the Axos FOSS Community!\n");
+    """
+
+start -> emit_axos_marker
+

@@ -1,0 +1,26 @@
+// =====================================================================
+// Axos Standard Library: fs_lib.axos
+// Canonical Filesystem Operations
+// =====================================================================
+
+HOW TO COPY source TO destination:
+    WRITE "COPY " TO SCREEN
+    WRITE source TO SCREEN
+    WRITE " TO " TO SCREEN
+    WRITE destination TO SCREEN
+
+HOW TO MOVE source TO destination:
+    WRITE "MOVE " TO SCREEN
+    WRITE source TO SCREEN
+    WRITE " TO " TO SCREEN
+    WRITE destination TO SCREEN
+
+HOW TO ZIP directory TO archive:
+    WRITE "ZIP " TO SCREEN
+    WRITE directory TO SCREEN
+    WRITE " TO " TO SCREEN
+    WRITE archive TO SCREEN
+
+HOW TO REMOVE target:
+    WRITE "REMOVE " TO SCREEN
+    WRITE target TO SCREEN

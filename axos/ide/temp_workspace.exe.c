@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+int g_argc; char **g_argv;
+static void start(void){
+    printf("%s\n","Welcome to Axos IDE!");
+
+}
+int main(int argc,char**argv){g_argc=argc;g_argv=argv;
+start();
+
+printf("\n\n[Process exited. Press Enter to close...]");fflush(stdout);getchar();return 0;}

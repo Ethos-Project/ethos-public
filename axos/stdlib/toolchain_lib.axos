@@ -1,0 +1,36 @@
+// =====================================================================
+// Axos Standard Library: toolchain_lib.axos
+// Canonical Toolchain and Lifecycle Operations
+// =====================================================================
+
+HOW TO MAKE target:
+    WRITE "MAKE " TO SCREEN
+    WRITE target TO SCREEN
+
+HOW TO COMPILE source TO target:
+    WRITE "COMPILE " TO SCREEN
+    WRITE source TO SCREEN
+    WRITE " TO " TO SCREEN
+    WRITE target TO SCREEN
+
+HOW TO TEST target:
+    WRITE "TEST " TO SCREEN
+    WRITE target TO SCREEN
+
+HOW TO DEPLOY artifact TO environment:
+    WRITE "DEPLOY " TO SCREEN
+    WRITE artifact TO SCREEN
+    WRITE " TO " TO SCREEN
+    WRITE environment TO SCREEN
+
+HOW TO INSTALL package:
+    WRITE "INSTALL " TO SCREEN
+    WRITE package TO SCREEN
+
+HOW TO UPDATE target:
+    WRITE "UPDATE " TO SCREEN
+    WRITE target TO SCREEN
+
+HOW TO ANALYZE target:
+    WRITE "ANALYZE " TO SCREEN
+    WRITE target TO SCREEN

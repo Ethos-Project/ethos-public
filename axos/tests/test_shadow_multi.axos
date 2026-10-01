@@ -1,0 +1,7 @@
+HOW TO PRINT item TO dest:
+    WRITE "CUSTOM_SHADOW_MULTI: " TO SCREEN
+    WRITE item TO SCREEN
+    WRITE " -> " TO SCREEN
+    WRITE dest TO SCREEN
+
+PRINT "hello multi" TO "screen"

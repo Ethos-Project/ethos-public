@@ -1,0 +1,29 @@
+// =====================================================================
+// Axos Standard Library: data_lib.axos
+// Canonical Data and Collection Operations
+// =====================================================================
+
+HOW TO SEARCH query IN target:
+    WRITE "SEARCH " TO SCREEN
+    WRITE query TO SCREEN
+    WRITE " IN " TO SCREEN
+    WRITE target TO SCREEN
+
+HOW TO SELECT fields FROM collection:
+    WRITE "SELECT " TO SCREEN
+    WRITE fields TO SCREEN
+    WRITE " FROM " TO SCREEN
+    WRITE collection TO SCREEN
+
+HOW TO FIND item IN collection:
+    WRITE "FIND " TO SCREEN
+    WRITE item TO SCREEN
+    WRITE " IN " TO SCREEN
+    WRITE collection TO SCREEN
+
+HOW TO PASTE buffer INTO target:
+    WRITE "PASTE " TO SCREEN
+    WRITE buffer TO SCREEN
+    WRITE " INTO " TO SCREEN
+    WRITE target TO SCREEN
+    target = buffer
